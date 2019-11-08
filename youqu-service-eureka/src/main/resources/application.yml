@@ -1,0 +1,17 @@
+#\u58F0\u660E\u670D\u52A1\u7684\u7AEF\u53E3\u53F7
+server:
+  port: 9000
+#\u5B9E\u4F8B\u540D\u79F0
+spring:
+  application:
+    name: youqu-service-eureka
+eureka:
+  instance:
+    #\u5B9E\u4F8B\u540D\u79F0
+    hostname: localhost
+  client:
+    #\u58F0\u660E\u81EA\u5DF1\u662F\u4E2A\u670D\u52A1\u7AEF\uFF0C\u4E0D\u53BB\u53D6\u522B\u4EBA\u7684\u6570\u636E
+    registerWithEureka: false
+    #\u670D\u52A1\u7AEF\u7684url\uFF0C\u8BA9\u5176\u4ED6\u4EBA\u90FD\u6765
+  serviceUrl: #\u6CE8\u518C\u4E2D\u5FC3\u5730\u5740\uFF0C\u5176\u4ED6\u670D\u52A1\u6307\u5B9A\u8FD9\u4E2A\u6CE8\u518C\u4E2D\u5FC3
+    defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/

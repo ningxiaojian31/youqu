@@ -1,0 +1,9 @@
+server:
+  port: 9502
+spring:
+  application:
+    name: youqu-service-provider-user
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/

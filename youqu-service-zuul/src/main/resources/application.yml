@@ -1,0 +1,9 @@
+server:
+  port: 9206
+spring:
+  application:
+    name: youqu-service-zuul
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/

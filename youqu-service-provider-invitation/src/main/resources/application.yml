@@ -1,0 +1,9 @@
+server:
+  port: 9500
+spring:
+  application:
+    name: youqu-service-provider-invitation
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/

@@ -1,0 +1,9 @@
+server:
+  port: 9205
+spring:
+  application:
+    name: youqu-service-redis
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/

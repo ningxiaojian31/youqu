@@ -1,0 +1,9 @@
+server:
+  port: 9201
+spring:
+  application:
+    name: youqu-service-mapper
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
