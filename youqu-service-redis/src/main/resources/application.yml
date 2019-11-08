@@ -1,9 +1,20 @@
+#eureka\u76F8\u5173\u914D\u7F6E
 server:
   port: 9205
 spring:
   application:
     name: youqu-service-redis
+  redis:
+    host: 192.168.0.24   #redis\u76F8\u5173\u914D\u7F6E
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:9000/eureka/
+
