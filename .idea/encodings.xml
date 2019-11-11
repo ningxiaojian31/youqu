@@ -2,10 +2,10 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/generator" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/youqu-service-commons" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/youqu-service-consumer-back" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/youqu-service-consumer-front" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/youqu-service-eruka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/youqu-service-es" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/youqu-service-eureka" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/youqu-service-mapper" charset="UTF-8" />

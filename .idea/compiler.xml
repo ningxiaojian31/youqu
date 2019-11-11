@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="generator" />
         <module name="youqu" />
         <module name="youqu-service-commons" />
         <module name="youqu-service-consumer-back" />
@@ -28,6 +29,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="generator" options="-parameters" />
       <module name="youqu" options="-parameters" />
       <module name="youqu-service-commons" options="-parameters" />
       <module name="youqu-service-consumer-back" options="-parameters" />
