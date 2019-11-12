@@ -1,7 +1,7 @@
 package cn.zdxh.chat.service;
 
 import cn.zdxh.commons.entity.TChatRecord;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>

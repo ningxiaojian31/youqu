@@ -1,9 +1,9 @@
 package cn.zdxh.chat.service.impl;
 
-import cn.zdxh.commons.entity.TChatRecord;
-import cn.zdxh.mapper.mapper.TChatRecordMapper;
+import cn.zdxh.chat.mapper.TChatRecordMapper;
 import cn.zdxh.chat.service.TChatRecordService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import cn.zdxh.commons.entity.TChatRecord;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

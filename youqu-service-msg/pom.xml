@@ -43,8 +43,8 @@
         <!--mp-->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>2.3</version>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatisplus.version}</version>
         </dependency>
 
         <dependency>

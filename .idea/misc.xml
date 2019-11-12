@@ -6,7 +6,6 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-commons/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-mapper/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-zuul/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-redis/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-es/pom.xml" />

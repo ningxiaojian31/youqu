@@ -1,9 +1,9 @@
 package cn.zdxh.invitation.service.impl;
 
 import cn.zdxh.commons.entity.TComment;
-import cn.zdxh.mapper.mapper.TCommentMapper;
+import cn.zdxh.invitation.mapper.TCommentMapper;
 import cn.zdxh.invitation.service.TCommentService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

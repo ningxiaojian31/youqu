@@ -3,7 +3,16 @@ server:
 spring:
   application:
     name: youqu-service-provider-invitation
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.107.126.98:3306/youqu?useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: root
+    password: 123456
+
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:9000/eureka/
+
+mybatis-plus:
+  mapper-locations: classpath:/mybatis/mapper/*.xml

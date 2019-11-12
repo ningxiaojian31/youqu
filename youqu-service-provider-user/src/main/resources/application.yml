@@ -21,3 +21,14 @@ spring:
      addresses: 47.107.126.98:5672
      username: guest
      password: guest
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://47.107.126.98:3306/youqu?useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: root
+    password: 123456
+
+
+mybatis-plus:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+
+

@@ -20,19 +20,24 @@
         <!--mp-->
         <dependency>
             <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>2.3</version>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+            <version>${mybatisplus.version}</version>
         </dependency>
+
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--依赖自己的项目-->
         <dependency>
             <groupId>cn.zdxh</groupId>
             <artifactId>youqu-service-commons</artifactId>
             <version>${project.commons.version}</version>
         </dependency>
-        <dependency>
-            <groupId>cn.zdxh</groupId>
-            <artifactId>youqu-service-mapper</artifactId>
-            <version>${project.mapper.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>

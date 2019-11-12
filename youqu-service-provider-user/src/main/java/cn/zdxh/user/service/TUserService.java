@@ -1,7 +1,7 @@
 package cn.zdxh.user.service;
 
 import cn.zdxh.commons.entity.TUser;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>

@@ -1,7 +1,7 @@
 package cn.zdxh.invitation.service;
 
 import cn.zdxh.commons.entity.TComment;
-import com.baomidou.mybatisplus.service.IService;
+import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>

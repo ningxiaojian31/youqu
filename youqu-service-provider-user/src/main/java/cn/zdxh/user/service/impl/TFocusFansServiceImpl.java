@@ -1,9 +1,9 @@
 package cn.zdxh.user.service.impl;
 
 import cn.zdxh.commons.entity.TFocusFans;
-import cn.zdxh.mapper.mapper.TFocusFansMapper;
+import cn.zdxh.user.mapper.TFocusFansMapper;
 import cn.zdxh.user.service.TFocusFansService;
-import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
  * @author Justin
  * @since 2019-11-11
  */
-//@Service
-//public class TFocusFansServiceImpl extends ServiceImpl<TFocusFansMapper, TFocusFans> implements TFocusFansService {
-//
-//}
+@Service
+public class TFocusFansServiceImpl extends ServiceImpl<TFocusFansMapper, TFocusFans> implements TFocusFansService {
+
+}
