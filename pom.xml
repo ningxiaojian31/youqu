@@ -17,7 +17,6 @@
         <module>youqu-service-consumer-front</module>
         <module>youqu-service-consumer-back</module>
         <module>youqu-service-eureka</module>
-        <module>youqu-service-mapper</module>
         <module>youqu-service-es</module>
         <module>youqu-service-msg</module>
         <module>youqu-service-oss</module>
@@ -26,7 +25,6 @@
         <module>youqu-service-provider-user</module>
         <module>youqu-service-redis</module>
         <module>youqu-service-zuul</module>
-        <module>youqu-service-service</module>
     </modules>
 
     <groupId>cn.zdxh</groupId>
