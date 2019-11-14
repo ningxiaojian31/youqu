@@ -8,8 +8,8 @@ eureka:
 
 #\u6781\u5149\u914D\u7F6E
 sms:
-  appkey: 242780bfdd7315dc1989fe2b
-  secret: 2f5ced2bef64167950e63d13
+  appkey: 2707abbee422bea7acdd3093
+  secret: c422dca04739385a8d4e329e
 
 #Stream\u76F8\u5173\u914D\u7F6E
 spring:

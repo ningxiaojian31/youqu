@@ -17,6 +17,17 @@ class TUserServiceTest {
         System.out.println(tUser);
     }
 
+    @Test
+    void testLogin() {
+        TUser tUser = new TUser();
+        tUser.setUsername("11111111");
+        tUser.setPassword("22222222");
+        Boolean login = tUserService.login(tUser);
+        System.out.println(login);
+    }
+
+
+
 
 
 }

@@ -30,5 +30,7 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mybatis/mapper/*.xml
-
-
+#日志打印
+logging:
+  level:
+    cn.zdxh.user.mapper : debug

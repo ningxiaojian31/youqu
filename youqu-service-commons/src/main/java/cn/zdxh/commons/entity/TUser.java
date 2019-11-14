@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -28,10 +30,13 @@ public class TUser extends Model<TUser> {
     /**
      * 登录名（手机号）
      */
+    @NotEmpty(message="手机号码不允许为空")
+    @Pattern(regexp="^1[3456789]\\d{9}$",message="手机号码格式不正确")
     private String username;
     /**
      * 密码（加密）
      */
+    @NotEmpty(message="密码不允许为空")
     private String password;
     /**
      * 昵称
