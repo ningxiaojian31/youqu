@@ -16,6 +16,13 @@
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
+        <!--七牛云-->
+        <dependency>
+            <groupId>com.qiniu</groupId>
+            <artifactId>qiniu-java-sdk</artifactId>
+            <version>7.2.2</version>
+        </dependency>
+
         <!--mp-->
         <dependency>
             <groupId>com.baomidou</groupId>

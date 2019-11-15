@@ -24,6 +24,14 @@ public class RedisController {
         return result;
     }
 
+    @PostMapping("redis/{key}/{val}/{minute}")
+    public Result put(@PathVariable String key, @PathVariable String val,@PathVariable Integer minute) {
+        Result result = new Result();
+        result.success(null);
+        redisService.put(key, val,minute);
+        return result;
+    }
+
     @GetMapping(value = "redis/{key}")
     public Result get(@PathVariable String key) {
         Result result = new Result();

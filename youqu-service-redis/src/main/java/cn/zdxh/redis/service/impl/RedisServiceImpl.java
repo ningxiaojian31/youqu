@@ -19,8 +19,8 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void put(String key, Object val, int seconds) {
-        redisTemplate.opsForValue().set(key, val, seconds, TimeUnit.SECONDS);
+    public void put(String key, Object val, int minute) {
+        redisTemplate.opsForValue().set(key, val, TimeUnit.MINUTES.toMillis(minute));
     }
 
     @Override

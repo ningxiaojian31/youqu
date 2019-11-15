@@ -1,4 +1,4 @@
-package cn.zdxh.user.feign;
+package cn.zdxh.user.client;
 
 import cn.zdxh.commons.utils.Result;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,5 +12,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface RedisClient {
     //获取key-value值
     @GetMapping(value = "redis/{key}")
-    public Result get(@PathVariable String key);
+    Result get(@PathVariable String key);
 }

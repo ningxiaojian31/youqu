@@ -1,7 +1,7 @@
 package cn.zdxh.user.service;
 
-import cn.zdxh.commons.entity.TUser;
+import cn.zdxh.commons.dto.TUserDTO;
 
 public interface IMessageProvider {
-    public void send(TUser tUser);
+    public void send(TUserDTO tUserDTO);
 }

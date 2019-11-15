@@ -15,9 +15,9 @@ public interface RedisService {
      *
      * @param key
      * @param val
-     * @param seconds 超时时间
+     * @param minute 超时时间
      */
-    default void put(String key, Object val, int seconds) {
+    default void put(String key, Object val, int minute) {
 
     }
 
