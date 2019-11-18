@@ -7,3 +7,10 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:9000/eureka/
+
+# 七牛云相关配置
+qiniu:
+  access: h1YFKAojPVBccsZ93Lc7tIGgxy73rEiKc-MEoQy_
+  secret: 98b5GM0KWayWN5xiBmdo5GBHhUeMHYallDU5jQJW
+  bucket: youqu-xh
+  url: http://q15bb6ybn.bkt.clouddn.com/
