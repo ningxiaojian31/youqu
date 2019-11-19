@@ -30,6 +30,9 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名法
+
 #日志打印
 logging:
   level:

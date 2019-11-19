@@ -16,3 +16,5 @@ eureka:
 
 mybatis-plus:
   mapper-locations: classpath*:mybatis/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名法

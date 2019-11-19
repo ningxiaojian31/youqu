@@ -23,7 +23,7 @@ public class TChatRecord extends Model<TChatRecord> {
     /**
      * 唯一id
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
     /**
      * 用户id

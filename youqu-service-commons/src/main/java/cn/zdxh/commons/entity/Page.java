@@ -13,4 +13,12 @@ public class Page {
     private Integer currentPage;
     //每页大小
     private Integer pageSize;
+
+    public Page() {
+    }
+
+    public Page(Integer currentPage, Integer pageSize) {
+        this.currentPage = currentPage;
+        this.pageSize = pageSize;
+    }
 }

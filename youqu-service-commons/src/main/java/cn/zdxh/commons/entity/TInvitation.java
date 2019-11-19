@@ -22,7 +22,7 @@ public class TInvitation extends Model<TInvitation> {
     /**
      * 唯一id
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
     /**
      * 帖子内容

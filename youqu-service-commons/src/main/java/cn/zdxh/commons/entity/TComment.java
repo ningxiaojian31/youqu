@@ -22,7 +22,7 @@ public class TComment extends Model<TComment> {
     /**
      * 唯一主键
      */
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.UUID)
     private String id;
     /**
      * 评论内容

@@ -23,4 +23,28 @@
         id, inv_content, inv_type, inv_image, inv_video, top_id, inv_laud, inv_share, create_time
     </sql>
 
+    <select id="findAllByInvitation" parameterType="map" resultType="cn.zdxh.commons.entity.TInvitation">
+        SELECT
+          <include refid="Base_Column_List"/>
+        FROM t_invitation
+        <where>
+            <if test="tInvitation.invContent != null and tInvitation.invContent != ''">
+                AND inv_content LIKE "%"#{tInvitation.invContent}"%"
+            </if>
+            <if test="tInvitation.invType != null">
+                AND inv_type = #{tInvitation.invType}
+            </if>
+            <if test="tInvitation.topId != null">
+                AND top_id = #{tInvitation.topId}
+            </if>
+            <if test="tInvitation.invLaud != null">
+                AND inv_laud = #{tInvitation.invLaud}
+            </if>
+            <if test="tInvitation.invShare != null">
+                AND inv_share = #{tInvitation.invShare}
+            </if>
+        </where>
+        LIMIT #{page.start},#{page.pageSize}
+    </select>
+
 </mapper>

@@ -4,7 +4,11 @@ import cn.zdxh.commons.entity.TTopic;
 import cn.zdxh.invitation.mapper.TTopicMapper;
 import cn.zdxh.invitation.service.TTopicService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -17,4 +21,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class TTopicServiceImpl extends ServiceImpl<TTopicMapper, TTopic> implements TTopicService {
 
+    @Autowired
+    private TTopicMapper tTopicMapper;
+
+    @Override
+    public List<TTopic> findAllByTopic(Map<String, Object> map) {
+        return tTopicMapper.findAllByTopic(map);
+    }
 }
