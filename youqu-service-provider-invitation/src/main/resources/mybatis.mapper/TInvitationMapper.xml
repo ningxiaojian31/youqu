@@ -47,4 +47,8 @@
         LIMIT #{page.start},#{page.pageSize}
     </select>
 
+    <select id="findAllByInvitation2" resultType="cn.zdxh.commons.entity.TInvitation">
+        SELECT * FROM t_invitation
+    </select>
+
 </mapper>

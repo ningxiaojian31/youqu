@@ -23,8 +23,8 @@ public class TChatRecord extends Model<TChatRecord> {
     /**
      * 唯一id
      */
-    @TableId(value = "id", type = IdType.UUID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 用户id
      */
@@ -46,12 +46,11 @@ public class TChatRecord extends Model<TChatRecord> {
      */
     private Date reateTime;
 
-
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

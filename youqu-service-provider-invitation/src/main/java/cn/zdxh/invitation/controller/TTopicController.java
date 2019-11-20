@@ -40,7 +40,14 @@ public class TTopicController {
     public Result save(@RequestBody TTopic tTopic){
         Result result = new Result();
         try {
-            boolean res = tTopicService.save(tTopic);
+            boolean res = false;
+            if (tTopic.getId() != null){
+                //修改
+                res = tTopicService.updateById(tTopic);
+            }else {
+                res = tTopicService.save(tTopic);
+            }
+
             if (res){
                 result.success("保存话题成功");
                 return result;

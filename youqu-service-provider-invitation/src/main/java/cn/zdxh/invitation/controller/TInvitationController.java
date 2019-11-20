@@ -39,7 +39,15 @@ public class TInvitationController {
     public Result save(@RequestBody TInvitation tInvitation){
         Result result = new Result();
         try {
-            boolean res = tInvitationService.save(tInvitation);
+            boolean res = false;
+            if (tInvitation.getId() != null){
+                //修改
+                res = tInvitationService.updateById(tInvitation);
+            }else {
+                //新增
+                res = tInvitationService.save(tInvitation);
+            }
+
             if (res){
                 result.success("保存帖子成功");
                 return result;

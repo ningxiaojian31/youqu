@@ -104,6 +104,11 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
     </build>
 
     <repositories>
@@ -113,5 +118,8 @@
             <url>https://repo.spring.io/milestone</url>
         </repository>
     </repositories>
+
+
+
 
 </project>

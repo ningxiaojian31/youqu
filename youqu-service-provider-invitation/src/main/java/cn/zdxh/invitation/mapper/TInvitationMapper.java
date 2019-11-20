@@ -17,4 +17,6 @@ import java.util.Map;
  */
 public interface TInvitationMapper extends BaseMapper<TInvitation> {
     List<TInvitation> findAllByInvitation(Map<String, Object> map);
+    List<TInvitation> findAllByInvitation2();
+
 }

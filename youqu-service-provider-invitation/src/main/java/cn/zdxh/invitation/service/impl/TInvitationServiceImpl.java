@@ -26,6 +26,6 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
 
     @Override
     public List<TInvitation> findAllByInvitation(Map<String, Object> map) {
-        return tInvitationMapper.findAllByInvitation(map);
+        return tInvitationMapper.findAllByInvitation2();
     }
 }

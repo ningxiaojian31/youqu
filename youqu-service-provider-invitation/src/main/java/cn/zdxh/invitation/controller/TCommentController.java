@@ -42,7 +42,15 @@ public class TCommentController {
     public Result save(@RequestBody TComment tComment){
         Result result = new Result();
         try {
-            boolean res = tCommentService.save(tComment);
+            boolean res = false;
+            if (tComment.getId() != null){
+                //修改
+                res = tCommentService.updateById(tComment);
+            }else {
+                //新增
+                res = tCommentService.save(tComment);
+            }
+
             if (res){
                 result.success("保存评论成功");
                 return result;

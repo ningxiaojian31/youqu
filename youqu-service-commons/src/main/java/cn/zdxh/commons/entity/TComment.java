@@ -22,8 +22,8 @@ public class TComment extends Model<TComment> {
     /**
      * 唯一主键
      */
-    @TableId(value = "id", type = IdType.UUID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 评论内容
      */
@@ -49,12 +49,11 @@ public class TComment extends Model<TComment> {
      */
     private Date createTime;
 
-
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

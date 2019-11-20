@@ -22,8 +22,8 @@ public class TInvitation extends Model<TInvitation> {
     /**
      * 唯一id
      */
-    @TableId(value = "id", type = IdType.UUID)
-    private String id;
+    @TableId(value = "id", type = IdType.AUTO)
+    private Integer id;
     /**
      * 帖子内容
      */
@@ -57,12 +57,11 @@ public class TInvitation extends Model<TInvitation> {
      */
     private Date createTime;
 
-
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
