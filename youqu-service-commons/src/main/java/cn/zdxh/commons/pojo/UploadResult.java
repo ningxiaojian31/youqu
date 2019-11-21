@@ -1,4 +1,4 @@
-package cn.zdxh.commons.result;
+package cn.zdxh.commons.pojo;
 
 import lombok.Data;
 

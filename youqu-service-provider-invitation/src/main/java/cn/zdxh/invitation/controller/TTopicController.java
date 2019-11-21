@@ -1,7 +1,7 @@
 package cn.zdxh.invitation.controller;
 
 
-import cn.zdxh.commons.entity.Page;
+import cn.zdxh.commons.pojo.Page;
 import cn.zdxh.commons.entity.TTopic;
 import cn.zdxh.commons.utils.PageUtils;
 import cn.zdxh.commons.utils.Result;
@@ -11,7 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;

@@ -5,7 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"cn.zdxh.chat","cn.zdxh.commons"})
 @EnableEurekaClient
 @MapperScan("cn.zdxh.chat.mapper")
 public class YouquServiceProviderChatApplication {

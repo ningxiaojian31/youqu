@@ -44,7 +44,7 @@ public class TChatRecord extends Model<TChatRecord> {
     /**
      * 创建时间
      */
-    private Date reateTime;
+    private Date ceateTime;
 
     public Integer getId() {
         return id;
@@ -86,12 +86,12 @@ public class TChatRecord extends Model<TChatRecord> {
         this.message = message;
     }
 
-    public Date getReateTime() {
-        return reateTime;
+    public Date getCeateTime() {
+        return ceateTime;
     }
 
-    public void setReateTime(Date reateTime) {
-        this.reateTime = reateTime;
+    public void setCeateTime(Date ceateTime) {
+        this.ceateTime = ceateTime;
     }
 
     @Override
@@ -107,7 +107,7 @@ public class TChatRecord extends Model<TChatRecord> {
         ", friendId=" + friendId +
         ", hasRead=" + hasRead +
         ", message=" + message +
-        ", reateTime=" + reateTime +
+        ", ceateTime=" + ceateTime +
         "}";
     }
 }

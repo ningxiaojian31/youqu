@@ -1,7 +1,7 @@
 package cn.zdxh.invitation.controller;
 
 
-import cn.zdxh.commons.entity.Page;
+import cn.zdxh.commons.pojo.Page;
 import cn.zdxh.commons.entity.TInvitation;
 import cn.zdxh.commons.utils.PageUtils;
 import cn.zdxh.commons.utils.Result;

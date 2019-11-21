@@ -1,6 +1,6 @@
 package cn.zdxh.commons.utils;
 
-import cn.zdxh.commons.entity.Page;
+import cn.zdxh.commons.pojo.Page;
 
 /**
  * 分页工具类
