@@ -15,6 +15,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户表 服务实现类
@@ -63,5 +65,10 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<TUser> findAll() {
+        return tUserMapper.findAll();
     }
 }

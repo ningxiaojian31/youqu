@@ -11,6 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 @FeignClient("youqu-service-redis")
 public interface RedisClient {
     //获取key-value值
-    @GetMapping(value = "redis/{key}")
-    Result get(@PathVariable String key);
+    @GetMapping(value = "/redis/{key}")
+    Result get(String key);
 }

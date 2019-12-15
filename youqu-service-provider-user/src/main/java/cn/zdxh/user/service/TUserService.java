@@ -5,6 +5,8 @@ import cn.zdxh.commons.entity.TUser;
 import cn.zdxh.commons.form.TUserForm;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户表 服务类
@@ -20,4 +22,6 @@ public interface TUserService extends IService<TUser> {
     Boolean register(TUser tUser);
 
     Boolean login(TUserDTO tUserDTO);
+
+    List<TUser> findAll();
 }

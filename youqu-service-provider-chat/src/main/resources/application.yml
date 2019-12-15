@@ -4,7 +4,7 @@ spring:
   application:
     name: youqu-service-provider-chat
   datasource:
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://47.107.126.98:3306/youqu?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     username: root
     password: 123456
@@ -15,6 +15,6 @@ eureka:
       defaultZone: http://localhost:9000/eureka/
 
 mybatis-plus:
-  mapper-locations: classpath*:mybatis/mapper/*.xml
+  mapper-locations: classpath:mapper/*.xml
   configuration:
     map-underscore-to-camel-case: true # 开启驼峰命名法

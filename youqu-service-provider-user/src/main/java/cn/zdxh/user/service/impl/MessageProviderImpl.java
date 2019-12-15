@@ -1,5 +1,6 @@
 package cn.zdxh.user.service.impl;
 
+import cn.zdxh.commons.dto.TUserDTO;
 import cn.zdxh.commons.entity.TUser;
 import cn.zdxh.user.service.IMessageProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,7 @@ public class MessageProviderImpl implements IMessageProvider {
     public Source source;
 
     @Override
-    public void send(TUser tUser) {
+    public void send(TUserDTO tUser) {
         source.output().send(MessageBuilder.withPayload(tUser).build());
     }
 }

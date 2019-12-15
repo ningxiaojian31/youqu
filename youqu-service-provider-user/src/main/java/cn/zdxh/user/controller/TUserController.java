@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * <p>
  * 用户表 前端控制器
@@ -90,6 +92,14 @@ public class TUserController {
             result.success(tUserDTO);
             return result;
         }
+        return result;
+    }
+
+    @GetMapping("/gets")
+    public Result findAll(){
+        Result result = new Result();
+        List<TUser> all = tUserService.findAll();
+        result.success(all);
         return result;
     }
 

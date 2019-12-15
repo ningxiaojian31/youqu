@@ -4,6 +4,8 @@ import cn.zdxh.commons.entity.TUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 
 /**
  * <p>
@@ -14,5 +16,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @since 2019-11-11
  */
 public interface TUserMapper extends BaseMapper<TUser> {
-
+    List<TUser> findAll();
 }
