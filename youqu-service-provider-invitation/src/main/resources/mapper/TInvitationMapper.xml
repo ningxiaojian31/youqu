@@ -22,7 +22,7 @@
         id, inv_content, inv_type, inv_image, inv_video, top_id, inv_laud, inv_share, create_time
     </sql>
 
-    <select id="findAllByInvitation" parameterType="map" resultType="cn.zdxh.commons.entity.TInvitation">
+    <select id="findAllByInvitation" parameterType="cn.zdxh.commons.entity.TInvitation" resultType="cn.zdxh.commons.entity.TInvitation">
         SELECT
           <include refid="Base_Column_List"/>
         FROM t_invitation
@@ -43,11 +43,7 @@
                 AND inv_share = #{tInvitation.invShare}
             </if>
         </where>
-        LIMIT #{page.start},#{page.pageSize}
     </select>
 
-    <select id="findAllByInvitation2" resultType="cn.zdxh.commons.entity.TInvitation">
-        SELECT * FROM t_invitation
-    </select>
 
 </mapper>

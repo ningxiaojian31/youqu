@@ -3,10 +3,12 @@ package cn.zdxh.invitation.service.impl;
 import cn.zdxh.commons.entity.TInvitation;
 import cn.zdxh.invitation.mapper.TInvitationMapper;
 import cn.zdxh.invitation.service.TInvitationService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +27,20 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
     private TInvitationMapper tInvitationMapper;
 
     @Override
-    public List<TInvitation> findAllByInvitation(Map<String, Object> map) {
-        return tInvitationMapper.findAllByInvitation2();
+    public int saveEntity(TInvitation tInvitation) {
+        int res = 0;
+        if (tInvitation.getId() != null){
+            res = tInvitationMapper.updateById(tInvitation);
+        }else {
+            tInvitation.setCreateTime(new Date());
+            res = tInvitationMapper.insert(tInvitation);
+        }
+        return res;
+    }
+
+    @Override
+    public Page findAllByInvitation(Page page, TInvitation tInvitation) {
+        page.setRecords(tInvitationMapper.findAllByInvitation(page,tInvitation));
+        return page;
     }
 }

@@ -20,7 +20,7 @@
         id, com_content, com_image, com_laud, inv_id, user_id, create_time
     </sql>
 
-    <select id="findAllByComment" parameterType="map" resultType="cn.zdxh.commons.entity.TComment">
+    <select id="findAllByComment" parameterType="cn.zdxh.commons.entity.TComment" resultType="cn.zdxh.commons.entity.TComment">
         SELECT
         <include refid="Base_Column_List"/>
         FROM t_comment
@@ -38,7 +38,6 @@
                 AND user_id = #{tComment.userId}
             </if>
         </where>
-        LIMIT #{page.start},#{page.pageSize}
     </select>
 
 </mapper>

@@ -4,6 +4,7 @@ package cn.zdxh.chat.controller;
 import cn.zdxh.chat.service.TChatRecordService;
 import cn.zdxh.commons.entity.TChatRecord;
 import cn.zdxh.commons.utils.Result;
+import cn.zdxh.commons.utils.ResultHelper;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -46,16 +47,8 @@ public class TChatRecordController {
     @RequestMapping("/findAll/{userId}/{friendId}")
     public Result findByUserIdAndFriendId(@PathVariable("userId") Integer userId,
                                           @PathVariable("friendId") Integer friendId) {
-        Result result = new Result();
-        try {
-            List<TChatRecord> tChatRecordList = chatRecordService.findByUserIdAndFriendId(userId, friendId);
-            result.success(tChatRecordList);
-            return result;
-        } catch (Exception e) {
-            e.printStackTrace();
-            result.error(e.getMessage());
-            return result;
-        }
+        List<TChatRecord> tChatRecordList = chatRecordService.findByUserIdAndFriendId(userId, friendId);
+        return ResultHelper.createSuccess(tChatRecordList);
     }
 
     /**
@@ -67,15 +60,8 @@ public class TChatRecordController {
     @ApiImplicitParam(value = "用户ID",name = "userId",required = true,dataType = "int")
     @RequestMapping("/findUnread/{userId}")
     public Result findUnreadByUserid(@PathVariable("userId") Integer userId) {
-        Result result = new Result();
-        try {
-            List<TChatRecord> tChatRecordList = chatRecordService.findUnreadByUserId(userId);
-            result.success(tChatRecordList);
-            return result;
-        } catch (Exception e) {
-            result.error(e.getMessage());
-            return result;
-        }
+        List<TChatRecord> tChatRecordList = chatRecordService.findUnreadByUserId(userId);
+       return ResultHelper.createSuccess(tChatRecordList);
     }
 
 }

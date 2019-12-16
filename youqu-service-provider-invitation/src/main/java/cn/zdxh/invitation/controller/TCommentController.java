@@ -1,12 +1,13 @@
 package cn.zdxh.invitation.controller;
 
 
-import cn.zdxh.commons.pojo.Page;
 import cn.zdxh.commons.entity.TComment;
 import cn.zdxh.commons.utils.PageUtils;
 import cn.zdxh.commons.utils.Result;
+import cn.zdxh.commons.utils.ResultHelper;
 import cn.zdxh.commons.utils.WebRuntimeException;
 import cn.zdxh.invitation.service.TCommentService;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -37,70 +38,40 @@ public class TCommentController {
     @ApiOperation("保存评论")
     @PostMapping("/save")
     public Result save(@RequestBody TComment tComment){
-        Result result = new Result();
-        try {
-            boolean res = false;
-            if (tComment.getId() != null){
-                //修改
-                res = tCommentService.updateById(tComment);
-            }else {
-                //新增
-                res = tCommentService.save(tComment);
-            }
-
-            if (res){
-                result.success("保存评论成功");
-                return result;
-            }
-        }catch (Exception e){
-            log.error(e.getMessage());
-            throw new WebRuntimeException("保存评论失败");
+        int res = tCommentService.saveEntity(tComment);
+        if (res > 0){
+            return ResultHelper.createSuccess("保存评论成功");
         }
-        return result;
+        return ResultHelper.createError("保存评论失败");
     }
 
     @ApiOperation("查询评论")
     @GetMapping("/get/{id}")
     public Result get(@PathVariable("id") Integer id){
-        Result result = new Result();
         TComment tComment = tCommentService.getById(id);
-        result.success(tComment);
-        return result;
+        return ResultHelper.createSuccess(tComment);
     }
 
     @ApiOperation("查询所有评论")
     @PostMapping("/gets")
     public Result getAll(@RequestBody TComment tComment,
                          @RequestParam(value = "currentPage",required = false) Integer currentPage,
-                         @RequestParam(value = "pageSize",required = false) Integer pageSize
-    ){
-        //封装操作
-        Result result = new Result();
-        Map<String,Object> map = new HashMap<>();
-        Page page = new Page(currentPage,pageSize);
-        map.put("tComment",tComment);
-        map.put("page", PageUtils.initStart(page));
-        //查询操作
-        List<TComment> tCommentList = tCommentService.findAllByComment(map);
-        result.success(tCommentList);
-        return result;
+                         @RequestParam(value = "pageSize",required = false) Integer pageSize){
+        //分页查询
+        com.baomidou.mybatisplus.extension.plugins.pagination.Page page = new Page();
+        page.setCurrent(currentPage != null ? currentPage : 1);
+        page.setSize(pageSize != null ? pageSize : 10);
+        return ResultHelper.createSuccess(tCommentService.findAllByComment(page,tComment));
     }
 
     @ApiOperation("删除评论")
     @GetMapping("/del/{id}")
     public Result delete(@PathVariable("id") Integer id){
-        Result result = new Result();
-        try {
-            boolean res = tCommentService.removeById(id);
-            if (res){
-                result.success("删除评论成功");
-                return result;
-            }
-        }catch (Exception e){
-            log.error(e.getMessage());
-            throw new WebRuntimeException("删除评论失败");
+        boolean res = tCommentService.removeById(id);
+        if (res){
+            return ResultHelper.createSuccess("删除评论成功");
         }
-        return result;
+        return ResultHelper.createError("删除评论失败");
     }
 }
 

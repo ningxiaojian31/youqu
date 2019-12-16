@@ -18,19 +18,21 @@
         id, top_name, top_note, top_image, create_time
     </sql>
 
-    <select id="findAllByTopic" parameterType="map" resultType="cn.zdxh.commons.entity.TTopic">
+    <select id="findAllByTopic" parameterType="cn.zdxh.commons.entity.TTopic" resultType="cn.zdxh.commons.entity.TTopic">
         SELECT
           <include refid="Base_Column_List"/>
         FROM t_topic
         <where>
-            <if test="tTopic.top_name != null and tTopic.top_name != ''">
-                AND top_name LIKE "%"#{tTopic.top_name}"%"
+            <if test="tTopic.topImage != null and tTopic.topImage != ''">
+                AND top_image LIKE "%"#{tTopic.topImage}"%"
             </if>
-            <if test="tTopic.top_note != null and tTopic.top_note != ''">
-                AND top_note LIKE "%"#{tTopic.top_note}"%"
+            <if test="tTopic.topName != null and tTopic.topName != ''">
+                AND top_name LIKE "%"#{tTopic.topName}"%"
+            </if>
+            <if test="tTopic.topNote != null and tTopic.topNote != ''">
+                AND top_note LIKE "%"#{tTopic.topNote}"%"
             </if>
         </where>
-        LIMIT #{page.start},#{page.pageSize}
     </select>
 
 </mapper>

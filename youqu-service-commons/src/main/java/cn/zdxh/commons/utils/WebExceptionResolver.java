@@ -24,9 +24,7 @@ public class WebExceptionResolver {
     public Result handleException(Exception e) {
         // 打印异常堆栈信息
         LOG.error(e.getMessage(), e);
-        Result result = new Result();
-        result.error(e.getMessage());
-        return result;
+        return ResultHelper.createError(e.getMessage());
     }
 
 }
