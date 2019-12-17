@@ -64,7 +64,7 @@ public class TTopicController {
     }
 
     @ApiOperation("删除话题")
-    @GetMapping("/del/{id}")
+    @DeleteMapping("/del/{id}")
     public Result delete(@PathVariable("id") Integer id){
         boolean res = tTopicService.removeById(id);
         if (res){

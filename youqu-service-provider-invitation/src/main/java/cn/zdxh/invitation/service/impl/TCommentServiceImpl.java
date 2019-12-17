@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 
 /**
  * <p>
@@ -29,6 +31,7 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
         if (tComment.getId() != null){
             res = tCommentMapper.updateById(tComment);
         }else {
+            tComment.setCreateTime(new Date());
             res = tCommentMapper.insert(tComment);
         }
         return res;

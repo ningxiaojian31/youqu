@@ -65,7 +65,7 @@ public class TCommentController {
     }
 
     @ApiOperation("删除评论")
-    @GetMapping("/del/{id}")
+    @DeleteMapping("/del/{id}")
     public Result delete(@PathVariable("id") Integer id){
         boolean res = tCommentService.removeById(id);
         if (res){

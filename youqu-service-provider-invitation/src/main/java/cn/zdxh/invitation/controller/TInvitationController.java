@@ -65,7 +65,7 @@ public class TInvitationController {
     }
 
     @ApiOperation("删除帖子")
-    @GetMapping("/del/{id}")
+    @DeleteMapping("/del/{id}")
     public Result delete(@PathVariable("id") Integer id){
         boolean res = tInvitationService.removeById(id);
         if (res){

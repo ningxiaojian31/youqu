@@ -16,8 +16,6 @@ class YouquServiceProviderInvitationApplicationTests {
     private TInvitationMapper mapper;
     @Test
     void contextLoads() {
-        List<TInvitation> invitationList = mapper.findAllByInvitation2();
-        invitationList.stream().forEach(System.out::println);
     }
 
 }
