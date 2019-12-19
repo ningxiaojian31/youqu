@@ -2,6 +2,7 @@ package cn.zdxh.commons.dto;
 
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import java.util.Date;
@@ -18,10 +19,10 @@ public class TUserDTO {
      */
     private Integer id;
     /**
-     * 登录名（手机号）
+     * 登录名（邮箱号）
      */
-    @NotEmpty(message="手机号码不允许为空")
-    @Pattern(regexp="^1[3456789]\\d{9}$",message="手机号码格式不正确")
+    @NotEmpty(message="邮箱不允许为空")
+    @Email(message = "邮箱号不合法")
     private String username;
     /**
      * 密码（加密）
@@ -60,5 +61,10 @@ public class TUserDTO {
      * 修改时间
      */
     private Date modifyTime;
+
+    /**
+     * token
+     */
+    private String token;
 
 }

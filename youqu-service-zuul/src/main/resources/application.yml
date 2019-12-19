@@ -1,5 +1,5 @@
 server:
-  port: 9206
+  port: 9999
 spring:
   application:
     name: youqu-service-zuul
@@ -7,3 +7,18 @@ eureka:
   client:
     service-url:
       defaultZone: http://localhost:9000/eureka/
+# 路由分发
+zuul:
+  routes:
+    youqu-invitation: #自定义路由名称
+      path: /invitation/** #路由规则
+      serviceId: youqu-service-provider-invitation #微服务ID
+    youqu-qiniu:
+      path: /qiniu/**
+      serviceId: youqu-service-oss
+    youqu-chat:
+      path: /chat/**
+      serviceId: youqu-service-provider-chat
+    youqu-user:
+      path: /user/**
+      serviceId: youqu-service-provider-user

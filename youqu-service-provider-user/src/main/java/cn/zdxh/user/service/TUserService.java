@@ -21,7 +21,7 @@ public interface TUserService extends IService<TUser> {
 
     Boolean register(TUser tUser);
 
-    Boolean login(TUserDTO tUserDTO);
+    TUser login(TUserDTO tUserDTO);
 
     List<TUser> findAll();
 }

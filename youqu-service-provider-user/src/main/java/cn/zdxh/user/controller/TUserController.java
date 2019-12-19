@@ -4,11 +4,15 @@ package cn.zdxh.user.controller;
 import cn.zdxh.commons.dto.TUserDTO;
 import cn.zdxh.commons.entity.TUser;
 import cn.zdxh.commons.form.TUserForm;
+import cn.zdxh.commons.utils.JwtUtils;
 import cn.zdxh.commons.utils.Result;
+import cn.zdxh.commons.utils.ResultHelper;
 import cn.zdxh.commons.utils.WebRuntimeException;
 import cn.zdxh.user.client.RedisClient;
 import cn.zdxh.user.service.IMessageProvider;
 import cn.zdxh.user.service.TUserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -24,6 +28,7 @@ import java.util.List;
  * @author Justin
  * @since 2019-11-11
  */
+@Api(tags = "用户/管理员控制器")
 @RestController
 @RequestMapping("/tUser")
 public class TUserController {
@@ -42,16 +47,15 @@ public class TUserController {
      * @param tUserDTO
      * @return
      */
+    @ApiOperation("用户-发送验证码")
     @PostMapping("/send")
     public Result sendMsg(@RequestBody TUserDTO tUserDTO,BindingResult bindingResult){
-        Result result = new Result();
         if (bindingResult.hasErrors()){
             //做手机号验证
             throw new WebRuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
         tUserService.sendMsg(tUserDTO);
-        result.success("发送短信成功！");
-        return result;
+        return ResultHelper.createSuccess("发送短信成功！");
     }
 
     /**
@@ -60,9 +64,9 @@ public class TUserController {
      * @param bindingResult
      * @return
      */
+    @ApiOperation("用户注册")
     @PostMapping("/register")
     public Result register(@RequestBody TUserForm tUserForm,BindingResult bindingResult){
-        Result result = new Result();
         if (bindingResult.hasErrors()){
             throw new WebRuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
@@ -73,34 +77,60 @@ public class TUserController {
             BeanUtils.copyProperties(tUserForm,tUser);
             Boolean register = tUserService.register(tUser);
             if (register){
-                result.success(tUser);
-                return result;
+                //生成token
+                String token = JwtUtils.sign(tUserForm.getUsername(), tUserForm.getId());
+                tUserForm.setToken(token);
+                return ResultHelper.createSuccess(tUserForm);
             }
         }
-        result.error("验证码错误或过期");
-        return result;
+        return ResultHelper.createError("验证码错误或过期");
     }
 
+    @ApiOperation("用户登录")
     @PostMapping("/login")
     public Result login(@RequestBody TUserDTO tUserDTO, BindingResult bindingResult){
-        Result result = new Result();
         if (bindingResult.hasErrors()){
             throw new WebRuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
-        Boolean login = tUserService.login(tUserDTO);
-        if (login){
-            result.success(tUserDTO);
-            return result;
+        TUser userResult = tUserService.login(tUserDTO);
+        if (userResult != null){
+            String token = "";
+            if (userResult.getType() != null && userResult.getType() == 1){
+                 //用户，生成token
+                BeanUtils.copyProperties(userResult,tUserDTO);
+                token = JwtUtils.sign(tUserDTO.getUsername(), tUserDTO.getId());
+                tUserDTO.setToken(token);
+            }
+            return ResultHelper.createSuccess(tUserDTO);
         }
-        return result;
+        return ResultHelper.createError("用户名或密码错误！");
     }
 
+    @ApiOperation("获取所有用户")
     @GetMapping("/gets")
     public Result findAll(){
-        Result result = new Result();
-        List<TUser> all = tUserService.findAll();
-        result.success(all);
-        return result;
+        return ResultHelper.createSuccess(tUserService.findAll());
+    }
+
+    @ApiOperation("管理员登录")
+    @PostMapping("/admin/login")
+    public Result adminLogin(@RequestBody TUserDTO tUserDTO){
+        TUser userResult = tUserService.login(tUserDTO);
+        if (userResult != null){
+            String token = "";
+            if (userResult.getType() != null && userResult.getType() == 1){
+                //管理员，生成token
+                BeanUtils.copyProperties(userResult,tUserDTO);
+                token = JwtUtils.sign(tUserDTO.getUsername(), tUserDTO.getId());
+                tUserDTO.setToken(token);
+            }else if (userResult.getType() != null && userResult.getType() == 2){
+                throw new WebRuntimeException("不是管理员账号！");
+            }else {
+                throw new WebRuntimeException("账号异常！");
+            }
+            return ResultHelper.createSuccess(tUserDTO);
+        }
+        return ResultHelper.createError("用户名或密码错误！");
     }
 
 //    @GetMapping("/test")

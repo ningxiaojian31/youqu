@@ -26,7 +26,7 @@ public class TUser extends Model<TUser> {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
     /**
-     * 登录名（手机号）
+     * 登录名（邮箱号）
      */
     private String username;
     /**

@@ -16,6 +16,20 @@
     <description>Demo project for Spring Boot</description>
 
     <dependencies>
+        <!--引入自己的项目-->
+        <dependency>
+            <groupId>cn.zdxh</groupId>
+            <artifactId>youqu-service-commons</artifactId>
+            <version>${project.commons.version}</version>
+        </dependency>
+
+        <!--JWT-->
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+            <version>${jwt.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>

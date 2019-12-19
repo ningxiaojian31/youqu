@@ -38,6 +38,7 @@
         <project.commons.version>0.0.1-SNAPSHOT</project.commons.version>
         <project.mapper.version>0.0.1-SNAPSHOT</project.mapper.version>
         <mybatisplus.version>3.0.6</mybatisplus.version>
+        <jwt.version>3.8.0</jwt.version>
     </properties>
 
     <!--管理自定义的版本号-->

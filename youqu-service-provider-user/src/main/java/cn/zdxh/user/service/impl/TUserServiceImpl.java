@@ -52,7 +52,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     }
 
     @Override
-    public Boolean login(TUserDTO tUserDTO) {
+    public TUser login(TUserDTO tUserDTO) {
         TUser tUser = new TUser();
         BeanUtils.copyProperties(tUserDTO,tUser);
         QueryWrapper<TUser> wrapper = new QueryWrapper<TUser>();
@@ -61,10 +61,7 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         wrapper.eq("username",tUser.getUsername())
                 .eq("password",md5Password);
         TUser userResult = tUserMapper.selectOne(wrapper);
-        if (userResult != null){
-            return true;
-        }
-        return false;
+        return userResult;
     }
 
     @Override
