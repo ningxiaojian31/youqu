@@ -28,4 +28,12 @@ public class ResultHelper {
         result.error(obj);
         return result;
     }
+
+    public static Result createUnauthorizedError(Object obj){
+        Result result = new Result();
+        result.setCode(-1);
+        result.setMsg("失败");
+        result.setData(obj);
+        return result;
+    }
 }
