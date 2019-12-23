@@ -52,8 +52,8 @@ public class TTopicController {
     }
 
     @ApiOperation("查询所有话题")
-    @PostMapping("/gets")
-    public Result getAll(@RequestBody TTopic tTopic,
+    @PostMapping("/list")
+    public Result list(@RequestBody TTopic tTopic,
                          @RequestParam(value = "currentPage",required = false) Integer currentPage,
                          @RequestParam(value = "pageSize",required = false) Integer pageSize){
         //分页查询

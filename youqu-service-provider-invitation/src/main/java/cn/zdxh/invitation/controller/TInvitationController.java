@@ -1,6 +1,7 @@
 package cn.zdxh.invitation.controller;
 
 
+import cn.zdxh.commons.dto.TInvitationDTO;
 import cn.zdxh.commons.entity.TInvitation;
 import cn.zdxh.commons.utils.PageUtils;
 import cn.zdxh.commons.utils.Result;
@@ -53,15 +54,15 @@ public class TInvitationController {
     }
 
     @ApiOperation("查询所有帖子")
-    @PostMapping("/gets")
-    public Result getAll(@RequestBody TInvitation tInvitation,
+    @PostMapping("/list")
+    public Result list(@RequestBody TInvitationDTO tInvitationDTO,
                          @RequestParam(value = "currentPage",required = false) Integer currentPage,
                          @RequestParam(value = "pageSize",required = false) Integer pageSize){
         //分页查询
-        com.baomidou.mybatisplus.extension.plugins.pagination.Page page = new Page();
+        Page page = new Page();
         page.setCurrent(currentPage != null ? currentPage : 1);
         page.setSize(pageSize != null ? pageSize : 10);
-        return ResultHelper.createSuccess(tInvitationService.findAllByInvitation(page,tInvitation));
+        return ResultHelper.createSuccess(tInvitationService.findAllByInvitation(page,tInvitationDTO));
     }
 
     @ApiOperation("删除帖子")

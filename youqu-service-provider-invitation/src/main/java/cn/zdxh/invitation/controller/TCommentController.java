@@ -53,8 +53,8 @@ public class TCommentController {
     }
 
     @ApiOperation("查询所有评论")
-    @PostMapping("/gets")
-    public Result getAll(@RequestBody TComment tComment,
+    @PostMapping("/list")
+    public Result list(@RequestBody TComment tComment,
                          @RequestParam(value = "currentPage",required = false) Integer currentPage,
                          @RequestParam(value = "pageSize",required = false) Integer pageSize){
         //分页查询

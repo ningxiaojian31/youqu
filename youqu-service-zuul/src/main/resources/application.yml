@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: youqu-service-zuul
+  servlet:
+    multipart:
+      max-request-size: -1   #解除文件上传大小限制
+      max-file-size: -1
 eureka:
   client:
     service-url:
@@ -22,3 +26,9 @@ zuul:
     youqu-user:
       path: /user/**
       serviceId: youqu-service-provider-user
+  host:
+    connect-timeout-millis: 12000 # 超时时间12秒
+    socket-timeout-millis: 11000
+ribbon:
+  ReadTimeout: 10000  # 超时时间10秒
+  SocketTimeout: 10000

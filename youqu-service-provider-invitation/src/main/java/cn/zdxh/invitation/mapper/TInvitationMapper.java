@@ -1,5 +1,6 @@
 package cn.zdxh.invitation.mapper;
 
+import cn.zdxh.commons.dto.TInvitationDTO;
 import cn.zdxh.commons.entity.TInvitation;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,6 +18,6 @@ import java.util.Map;
  * @since 2019-11-11
  */
 public interface TInvitationMapper extends BaseMapper<TInvitation> {
-    List<TInvitation> findAllByInvitation(Page page,@Param("tInvitation") TInvitation tInvitation);
+    List<TInvitationDTO> findAllByInvitation(Page page, @Param("tInvitation") TInvitationDTO tInvitationDTO);
 
 }

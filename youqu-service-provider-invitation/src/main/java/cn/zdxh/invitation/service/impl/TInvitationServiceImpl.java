@@ -1,5 +1,6 @@
 package cn.zdxh.invitation.service.impl;
 
+import cn.zdxh.commons.dto.TInvitationDTO;
 import cn.zdxh.commons.entity.TInvitation;
 import cn.zdxh.invitation.mapper.TInvitationMapper;
 import cn.zdxh.invitation.service.TInvitationService;
@@ -39,8 +40,8 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
     }
 
     @Override
-    public Page findAllByInvitation(Page page, TInvitation tInvitation) {
-        page.setRecords(tInvitationMapper.findAllByInvitation(page,tInvitation));
+    public Page findAllByInvitation(Page page, TInvitationDTO tInvitationDTO) {
+        page.setRecords(tInvitationMapper.findAllByInvitation(page,tInvitationDTO));
         return page;
     }
 }

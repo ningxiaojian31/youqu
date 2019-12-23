@@ -1,8 +1,13 @@
+
 server:
   port: 9204
 spring:
   application:
     name: youqu-service-oss
+  servlet:
+    multipart:
+      max-request-size: -1
+      max-file-size: -1
 eureka:
   client:
     service-url:

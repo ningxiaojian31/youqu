@@ -1,5 +1,6 @@
 package cn.zdxh.invitation.service;
 
+import cn.zdxh.commons.dto.TInvitationDTO;
 import cn.zdxh.commons.entity.TInvitation;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,5 +20,5 @@ public interface TInvitationService extends IService<TInvitation> {
 
     int saveEntity(TInvitation tInvitation);
 
-    Page findAllByInvitation(Page page ,TInvitation tInvitation);
+    Page findAllByInvitation(Page page , TInvitationDTO tInvitationDTO);
 }

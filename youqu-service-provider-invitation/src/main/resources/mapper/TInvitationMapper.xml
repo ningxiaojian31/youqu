@@ -5,7 +5,7 @@
 
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="cn.zdxh.commons.entity.TInvitation">
+    <resultMap id="BaseResultMap" type="cn.zdxh.commons.dto.TInvitationDTO">
         <id column="id" property="id" />
         <result column="inv_content" property="invContent" />
         <result column="inv_type" property="invType" />
@@ -15,32 +15,35 @@
         <result column="inv_laud" property="invLaud" />
         <result column="inv_share" property="invShare" />
         <result column="create_time" property="createTime" />
+        <result column="top_name" property="topName"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, inv_content, inv_type, inv_image, inv_video, top_id, inv_laud, inv_share, create_time
+        inv.id, inv.inv_content, inv.inv_type, inv.inv_image, inv.inv_video, inv.top_id, inv.inv_laud, inv.inv_share, inv.create_time ,top.top_name
     </sql>
 
-    <select id="findAllByInvitation" parameterType="cn.zdxh.commons.entity.TInvitation" resultType="cn.zdxh.commons.entity.TInvitation">
+    <select id="findAllByInvitation" parameterType="cn.zdxh.commons.dto.TInvitationDTO" resultMap="BaseResultMap">
         SELECT
           <include refid="Base_Column_List"/>
-        FROM t_invitation
+        FROM t_invitation inv
+        LEFT JOIN t_topic top
+        ON inv.top_id = top.id
         <where>
             <if test="tInvitation.invContent != null and tInvitation.invContent != ''">
-                AND inv_content LIKE "%"#{tInvitation.invContent}"%"
+                AND inv.inv_content LIKE "%"#{tInvitation.invContent}"%"
             </if>
             <if test="tInvitation.invType != null">
-                AND inv_type = #{tInvitation.invType}
+                AND inv.inv_type = #{tInvitation.invType}
             </if>
-            <if test="tInvitation.topId != null">
-                AND top_id = #{tInvitation.topId}
+            <if test="tInvitation.invLaud != null and tInvitation.invLaud != ''">
+                AND inv.inv_laud = #{tInvitation.invLaud}
             </if>
-            <if test="tInvitation.invLaud != null">
-                AND inv_laud = #{tInvitation.invLaud}
+            <if test="tInvitation.invShare != null and tInvitation.invShare != ''">
+                AND inv.inv_share = #{tInvitation.invShare}
             </if>
-            <if test="tInvitation.invShare != null">
-                AND inv_share = #{tInvitation.invShare}
+            <if test="tInvitation.topName != null and tInvitation.topName != ''">
+                AND top.top_name LIKE "%"#{tInvitation.topName}"%"
             </if>
         </where>
     </select>
