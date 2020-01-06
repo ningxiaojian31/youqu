@@ -43,7 +43,7 @@ public class TUserController {
     private RedisClient redisClient;
 
     /**
-     * 发送验证码短信
+     * 发送验证码邮箱
      * @param tUserDTO
      * @return
      */
@@ -51,11 +51,11 @@ public class TUserController {
     @PostMapping("/send")
     public Result sendMsg(@RequestBody TUserDTO tUserDTO,BindingResult bindingResult){
         if (bindingResult.hasErrors()){
-            //做手机号验证
+            //做邮箱验证
             throw new WebRuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
         tUserService.sendMsg(tUserDTO);
-        return ResultHelper.createSuccess("发送短信成功！");
+        return ResultHelper.createSuccess("发送邮件成功！");
     }
 
     /**
