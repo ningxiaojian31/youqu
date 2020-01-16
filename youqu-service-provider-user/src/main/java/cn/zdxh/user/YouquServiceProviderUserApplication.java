@@ -9,7 +9,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.scheduling.annotation.EnableAsync;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {"cn.zdxh.user","cn.zdxh.commons"})
 @EnableEurekaClient
 @MapperScan("cn.zdxh.user.mapper")
 @EnableBinding(Source.class)

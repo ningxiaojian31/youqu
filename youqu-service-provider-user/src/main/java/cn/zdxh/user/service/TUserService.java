@@ -19,7 +19,7 @@ public interface TUserService extends IService<TUser> {
 
     void sendMsg(TUserDTO tUserDTO);
 
-    Boolean register(TUser tUser);
+    TUserForm register(TUserForm tUserForm);
 
     TUser login(TUserDTO tUserDTO);
 

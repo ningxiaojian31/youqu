@@ -1,0 +1,61 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9000/eureka/
+
+server:
+  port: 9204
+spring:
+  application:
+    name: youqu-service-other
+  servlet:
+    multipart:
+      max-request-size: -1
+      max-file-size: -1
+  cloud:  # Spring Cloud Stream 相关配置
+    stream:
+      bindings: # \u670D\u52A1\u7684\u6574\u5408\u5904\u7406
+        input: # \u8FD9\u4E2A\u540D\u5B57\u662F\u4E00\u4E2A\u901A\u9053\u7684\u540D\u79F0\uFF0C\u5728\u5206\u6790\u5177\u4F53\u6E90\u4EE3\u7801\u7684\u65F6\u5019\u4F1A\u8FDB\u884C\u8BF4\u660E
+          destination: myOutput # \u8868\u793A\u8981\u4F7F\u7528\u7684Exchange\u540D\u79F0\u5B9A\u4E49
+          content-type: application/json # \u8BBE\u7F6E\u6D88\u606F\u7C7B\u578B\uFF0C\u672C\u6B21\u4E3A\u5BF9\u8C61json\uFF0C\u5982\u679C\u662F\u6587\u672C\u5219\u8BBE\u7F6E\u201Ctext/plain\u201D
+          group: myInput  #queue\u540D
+
+  redis:
+    host: 47.107.126.98   #redis相关配置
+    port: 6379
+    lettuce:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1ms
+        min-idle: 0
+
+  rabbitmq: # RabbitMQ相关配置
+    addresses: 47.107.126.98:5672
+    username: guest
+    password: guest
+
+  # QQ邮箱设置
+  mail:
+    host: smtp.qq.com #发送邮件服务器
+    username: 664650322@qq.com #发送邮件的邮箱地址
+    password:  qopfavkgytdqbehe #客户端授权码，不是邮箱密码，这个在qq邮箱设置里面自动生成的
+    properties.mail.smtp.port: 465 #端口号465或587
+    from: 664650322@qq.com # 发送邮件的地址，和上面username一致
+    properties.mail.smtp.starttls.enable: true
+    properties.mail.smtp.starttls.required: true
+    properties.mail.smtp.ssl.enable: true
+    default-encoding: utf-8
+
+# 邮件验证码过期时间
+time:
+  minute: 10
+
+
+# 七牛云相关配置
+qiniu:
+  access: h1YFKAojPVBccsZ93Lc7tIGgxy73rEiKc-MEoQy_
+  secret: 98b5GM0KWayWN5xiBmdo5GBHhUeMHYallDU5jQJW
+  bucket: youqu-xh
+  url: http://www.ningxiaojian.top/
+

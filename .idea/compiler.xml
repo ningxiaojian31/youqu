@@ -11,20 +11,20 @@
         <module name="youqu-service-commons" />
         <module name="youqu-service-consumer-back" />
         <module name="youqu-service-consumer-front" />
-        <module name="youqu-service-es" />
         <module name="youqu-service-eureka" />
-        <module name="youqu-service-msg" />
-        <module name="youqu-service-oss" />
+        <module name="youqu-service-other" />
         <module name="youqu-service-provider-chat" />
         <module name="youqu-service-provider-invitation" />
         <module name="youqu-service-provider-user" />
-        <module name="youqu-service-redis" />
         <module name="youqu-service-zuul" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="8">
       <module name="youqu-service-eruka" target="1.8" />
+      <module name="youqu-service-es" target="1.8" />
       <module name="youqu-service-mapper" target="1.8" />
+      <module name="youqu-service-msg" target="1.8" />
+      <module name="youqu-service-redis" target="1.8" />
       <module name="youqu-service-service" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -40,7 +40,7 @@
       <module name="youqu-service-eureka" options="-parameters" />
       <module name="youqu-service-mapper" options="-parameters" />
       <module name="youqu-service-msg" options="-parameters" />
-      <module name="youqu-service-oss" options="-parameters" />
+      <module name="youqu-service-other" options="-parameters" />
       <module name="youqu-service-provider-chat" options="-parameters" />
       <module name="youqu-service-provider-invitation" options="-parameters" />
       <module name="youqu-service-provider-user" options="-parameters" />

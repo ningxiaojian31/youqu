@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 /**
  * 远程调用redis服务
  */
-@FeignClient("youqu-service-redis")
+@FeignClient("youqu-service-other")
 public interface RedisClient {
     //获取key-value值
-    @GetMapping(value = "/redis/{key}")
+    @GetMapping(value = "/other/cache/redis/{key}")
     Result get(String key);
 }

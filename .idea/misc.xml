@@ -7,9 +7,6 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-commons/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-zuul/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-redis/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-es/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-msg/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-oss/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-provider-invitation/pom.xml" />
         <option value="$PROJECT_DIR$/youqu-service-provider-user/pom.xml" />

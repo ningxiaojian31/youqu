@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,8 +40,6 @@ public class TUserController {
     @Autowired
     private TUserService tUserService;
 
-    @Autowired
-    private RedisClient redisClient;
 
     /**
      * 发送验证码邮箱
@@ -49,7 +48,7 @@ public class TUserController {
      */
     @ApiOperation("用户-发送验证码")
     @PostMapping("/send")
-    public Result sendMsg(@RequestBody TUserDTO tUserDTO,BindingResult bindingResult){
+    public Result sendMsg(@RequestBody @Validated TUserDTO tUserDTO,BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             //做邮箱验证
             throw new WebRuntimeException(bindingResult.getFieldError().getDefaultMessage());
@@ -66,40 +65,29 @@ public class TUserController {
      */
     @ApiOperation("用户注册")
     @PostMapping("/register")
-    public Result register(@RequestBody TUserForm tUserForm,BindingResult bindingResult){
+    public Result register(@RequestBody @Validated TUserForm tUserForm,BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             throw new WebRuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
-        Result resultRedis = redisClient.get(tUserForm.getUsername()+"_reg");
-        //验证码通过
-        if (resultRedis.getData() != null && tUserForm.getMsgCode().equals(resultRedis.getData())){
-            TUser tUser = new TUser();
-            BeanUtils.copyProperties(tUserForm,tUser);
-            Boolean register = tUserService.register(tUser);
-            if (register){
-                //生成token
-                String token = JwtUtils.sign(tUserForm.getUsername(), tUserForm.getId());
-                tUserForm.setToken(token);
-                return ResultHelper.createSuccess(tUserForm);
-            }
-        }
-        return ResultHelper.createError("验证码错误或过期");
+        return ResultHelper.createSuccess(tUserService.register(tUserForm));
     }
 
     @ApiOperation("用户登录")
     @PostMapping("/login")
-    public Result login(@RequestBody TUserDTO tUserDTO, BindingResult bindingResult){
+    public Result login(@RequestBody @Validated TUserDTO tUserDTO, BindingResult bindingResult){
         if (bindingResult.hasErrors()){
             throw new WebRuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
         TUser userResult = tUserService.login(tUserDTO);
         if (userResult != null){
             String token = "";
-            if (userResult.getType() != null && userResult.getType() == 1){
+            if (userResult.getType() != null && userResult.getType() == 2){
                  //用户，生成token
                 BeanUtils.copyProperties(userResult,tUserDTO);
                 token = JwtUtils.sign(tUserDTO.getUsername(), tUserDTO.getId());
                 tUserDTO.setToken(token);
+            }else {
+                throw new WebRuntimeException("账号异常！");
             }
             return ResultHelper.createSuccess(tUserDTO);
         }

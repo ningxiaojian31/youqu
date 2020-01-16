@@ -33,6 +33,7 @@ public class AuthFilter extends ZuulFilter {
     private static final String LOGIN_URI = "/user/tUser/login";
     private static final String ADMIN_LOGIN_URI = "/user/tUser/admin/login";
     private static final String REGISTER_URI = "/user/tUser/register";
+    private static final String SEND_MSG_URI = "/user/tUser/send";
 
 
     @Override
@@ -52,8 +53,8 @@ public class AuthFilter extends ZuulFilter {
 
         logger.info("======zuul======", request.getRequestURI());
         //注册和登录接口不拦截，其他接口都要拦截校验 token
-        if (LOGIN_URI.equals(request.getRequestURI()) || REGISTER_URI.equals(request.getRequestURI())
-            || ADMIN_LOGIN_URI.equals(request.getRequestURI())) {
+        String uri = request.getRequestURI();
+        if (LOGIN_URI.equals(uri) || REGISTER_URI.equals(uri) || ADMIN_LOGIN_URI.equals(uri) || SEND_MSG_URI.equals(uri)) {
             return false;
         }
         return true;

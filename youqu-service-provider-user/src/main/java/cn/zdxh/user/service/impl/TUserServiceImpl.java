@@ -2,7 +2,11 @@ package cn.zdxh.user.service.impl;
 
 import cn.zdxh.commons.dto.TUserDTO;
 import cn.zdxh.commons.entity.TUser;
+import cn.zdxh.commons.form.TUserForm;
+import cn.zdxh.commons.utils.JwtUtils;
 import cn.zdxh.commons.utils.Result;
+import cn.zdxh.commons.utils.ResultHelper;
+import cn.zdxh.commons.utils.WebRuntimeException;
 import cn.zdxh.user.client.RedisClient;
 import cn.zdxh.user.mapper.TUserMapper;
 import cn.zdxh.user.service.IMessageProvider;
@@ -13,9 +17,12 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -34,6 +41,9 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     @Autowired
     private IMessageProvider provider;
 
+    @Autowired
+    private RedisClient redisClient;
+
 
     @Override
     @Async //异步方法
@@ -43,12 +53,31 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     }
 
     @Override
-    public Boolean register(TUser tUser) {
-        int count = tUserMapper.insert(tUser);
-        if (count > 0){
-            return true;
+    public TUserForm register(TUserForm tUserForm) {
+        //查询该用户
+        Map map = new HashMap<String,Object>();
+        map.put("username",tUserForm.getUsername());
+        List list = tUserMapper.selectByMap(map);
+        if (!CollectionUtils.isEmpty(list)){
+            throw new WebRuntimeException("该邮箱已注册！请登录");
         }
-        return false;
+        Result resultRedis = redisClient.get("reg_"+tUserForm.getUsername());
+        //验证码通过
+        if (resultRedis.getData() != null && tUserForm.getMsgCode().equals(resultRedis.getData())){
+            TUser tUser = new TUser();
+            BeanUtils.copyProperties(tUserForm,tUser);
+            int register = tUserMapper.insert(tUser);
+            if (register > 0){
+                //生成token
+                String token = JwtUtils.sign(tUserForm.getUsername(), tUserForm.getId());
+                tUserForm.setToken(token);
+            }else {
+                throw new WebRuntimeException("注册失败！请重试");
+            }
+        }else {
+            throw new WebRuntimeException("验证码错误或过期");
+        }
+        return tUserForm;
     }
 
     @Override

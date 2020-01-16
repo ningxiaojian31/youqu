@@ -18,8 +18,8 @@ zuul:
       path: /invitation/** #路由规则
       serviceId: youqu-service-provider-invitation #微服务ID
     youqu-qiniu:
-      path: /qiniu/**
-      serviceId: youqu-service-oss
+      path: /other/**
+      serviceId: youqu-service-other
     youqu-chat:
       path: /chat/**
       serviceId: youqu-service-provider-chat
