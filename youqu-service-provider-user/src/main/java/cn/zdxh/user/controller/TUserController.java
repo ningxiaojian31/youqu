@@ -78,20 +78,8 @@ public class TUserController {
         if (bindingResult.hasErrors()){
             throw new WebRuntimeException(bindingResult.getFieldError().getDefaultMessage());
         }
-        TUser userResult = tUserService.login(tUserDTO);
-        if (userResult != null){
-            String token = "";
-            if (userResult.getType() != null && userResult.getType() == 2){
-                 //用户，生成token
-                BeanUtils.copyProperties(userResult,tUserDTO);
-                token = JwtUtils.sign(tUserDTO.getUsername(), tUserDTO.getId());
-                tUserDTO.setToken(token);
-            }else {
-                throw new WebRuntimeException("账号异常！");
-            }
-            return ResultHelper.createSuccess(tUserDTO);
-        }
-        return ResultHelper.createError("用户名或密码错误！");
+        TUserDTO userResult = tUserService.login(tUserDTO);
+        return ResultHelper.createSuccess(userResult);
     }
 
     @ApiOperation("获取所有用户")
@@ -103,22 +91,7 @@ public class TUserController {
     @ApiOperation("管理员登录")
     @PostMapping("/admin/login")
     public Result adminLogin(@RequestBody TUserDTO tUserDTO){
-        TUser userResult = tUserService.login(tUserDTO);
-        if (userResult != null){
-            String token = "";
-            if (userResult.getType() != null && userResult.getType() == 1){
-                //管理员，生成token
-                BeanUtils.copyProperties(userResult,tUserDTO);
-                token = JwtUtils.sign(tUserDTO.getUsername(), tUserDTO.getId());
-                tUserDTO.setToken(token);
-            }else if (userResult.getType() != null && userResult.getType() == 2){
-                throw new WebRuntimeException("不是管理员账号！");
-            }else {
-                throw new WebRuntimeException("账号异常！");
-            }
-            return ResultHelper.createSuccess(tUserDTO);
-        }
-        return ResultHelper.createError("用户名或密码错误！");
+        return ResultHelper.createSuccess(tUserService.adminLogin(tUserDTO));
     }
 
 //    @GetMapping("/test")

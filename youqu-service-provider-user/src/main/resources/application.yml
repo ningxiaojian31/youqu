@@ -37,4 +37,5 @@ mybatis-plus:
 logging:
   level:
     cn.zdxh.user.mapper : debug
+    cn.zdxh.user.client.RedisClient : debug
 

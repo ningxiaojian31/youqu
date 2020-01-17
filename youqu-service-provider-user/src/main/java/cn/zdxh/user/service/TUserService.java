@@ -21,7 +21,9 @@ public interface TUserService extends IService<TUser> {
 
     TUserForm register(TUserForm tUserForm);
 
-    TUser login(TUserDTO tUserDTO);
+    TUserDTO login(TUserDTO tUserDTO);
+
+    TUserDTO adminLogin(TUserDTO tUserDTO);
 
     List<TUser> findAll();
 }
