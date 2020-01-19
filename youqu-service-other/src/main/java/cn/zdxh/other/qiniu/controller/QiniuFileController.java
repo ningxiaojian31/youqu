@@ -1,18 +1,18 @@
 package cn.zdxh.other.qiniu.controller;
 
 import cn.zdxh.commons.utils.Result;
+import cn.zdxh.commons.utils.WebRuntimeException;
 import cn.zdxh.other.qiniu.entity.Qiniu;
 import cn.zdxh.other.qiniu.service.QiniuFileService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.util.UUID;
@@ -30,7 +30,10 @@ public class QiniuFileController {
 
     @ApiOperation("文件上传")
     @PostMapping("/upload")
-    public Result upload(MultipartFile file) throws Exception{
+    public Result upload(@RequestParam("file") MultipartFile file) throws Exception{
+        if (file == null){
+            throw new WebRuntimeException("上传的文件不能为空");
+        }
         Result result = new Result();
         String originalFilename = file.getOriginalFilename();
         //新文件名

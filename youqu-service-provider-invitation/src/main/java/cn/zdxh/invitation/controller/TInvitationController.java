@@ -41,9 +41,9 @@ public class TInvitationController {
     public Result save(@RequestBody TInvitation tInvitation){
         int res = tInvitationService.saveEntity(tInvitation);
         if (res > 0){
-            return ResultHelper.createSuccess("保存帖子成功");
+            return ResultHelper.createSuccess("发布帖子成功");
         }
-        return ResultHelper.createError("保存帖子失败");
+        return ResultHelper.createError("发布帖子失败");
     }
 
     @ApiOperation("查询帖子")
