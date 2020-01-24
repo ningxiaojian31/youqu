@@ -13,12 +13,12 @@ public class NettyListener implements ApplicationListener<ContextRefreshedEvent>
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        if(event.getApplicationContext().getParent() == null) {
+       // if(event.getApplicationContext().getParent() == null) {
             try {
                 websocketServer.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
+        //}
     }
 }

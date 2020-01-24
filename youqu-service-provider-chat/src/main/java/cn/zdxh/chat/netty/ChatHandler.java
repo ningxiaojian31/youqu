@@ -1,9 +1,8 @@
 package cn.zdxh.chat.netty;
 
-import cn.zdxh.chat.service.TChatRecordService;
-import cn.zdxh.commons.entity.TChatRecord;
-import cn.zdxh.commons.pojo.Message;
-import cn.zdxh.commons.utils.SpringUtil;
+import cn.zdxh.chat.pojo.TbChatRecord;
+import cn.zdxh.chat.service.ChatRecordService;
+import cn.zdxh.chat.util.SpringUtils;
 import com.alibaba.fastjson.JSON;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -14,7 +13,6 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.concurrent.GlobalEventExecutor;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * 处理消息的handler
@@ -37,14 +35,14 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
         Message message = JSON.parseObject(text, Message.class);
 
         // 通过SpringUtil工具类获取Spring上下文容器
-        TChatRecordService chatRecordService = SpringUtil.getBean(TChatRecordService.class);
+        ChatRecordService chatRecordService = SpringUtils.getBean(ChatRecordService.class);
 
         switch (message.getType()) {
             // 处理客户端连接的消息
             case 0:
                 // 建立用户与通道的关联
-                Integer userid = message.getTChatRecord().getUserId();
-                UserChannelMap.put(String.valueOf(userid), ctx.channel());
+                String userid = message.getChatRecord().getUserid();
+                UserChannelMap.put(userid, ctx.channel());
                 System.out.println("建立用户:" + userid + "与通道" + ctx.channel().id() + "的关联");
                 UserChannelMap.print();
                 break;
@@ -52,27 +50,24 @@ public class ChatHandler extends SimpleChannelInboundHandler<TextWebSocketFrame>
             case 1:
                 System.out.println("接收到用户消息");
                 // 将聊天消息保存到数据库
-                TChatRecord chatRecord = message.getTChatRecord();
-                chatRecord.setHasRead(0); //设置为未读
-                chatRecord.setCeateTime(new Date());
-                chatRecordService.save(chatRecord);
+                TbChatRecord chatRecord = message.getChatRecord();
+                chatRecordService.insert(chatRecord);
 
                 // 如果发送消息好友在线，可以直接将消息发送给好友
-                Channel channel = UserChannelMap.get(String.valueOf(chatRecord.getFriendId()));
+                Channel channel = UserChannelMap.get(chatRecord.getFriendid());
                 if(channel != null) {
                     channel.writeAndFlush(new TextWebSocketFrame(JSON.toJSONString(message)));
                 }
                 else {
                     // 如果不在线，暂时不发送
-                    System.out.println("用户" + chatRecord.getFriendId() + "不在线");
+                    System.out.println("用户" + chatRecord.getFriendid() + "不在线");
                 }
                 break;
             // 处理客户端的签收消息
             case 2:
                 // 将消息记录设置为已读
-                TChatRecord tChatRecord = message.getTChatRecord();
-                tChatRecord.setHasRead(1); //设置已读
-                chatRecordService.updateById(tChatRecord);
+                System.out.println("信息标记已读："+ JSON.toJSONString(message));
+                chatRecordService.updateStatusHasRead(message.getChatRecord().getId());
                 break;
             case 3:
                 // 接收心跳消息
