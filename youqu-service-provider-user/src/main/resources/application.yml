@@ -18,12 +18,12 @@ spring:
           content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
           #binder: defaultRabbit # 设置要绑定的消息服务的具体设置
   rabbitmq:
-     addresses: 47.107.126.98:5672
+     addresses: 134.175.168.124:5672
      username: guest
      password: guest
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://47.107.126.98:3306/youqu?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
+    url: jdbc:mysql://134.175.168.124:3306/youqu?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     username: root
     password: 123456
 

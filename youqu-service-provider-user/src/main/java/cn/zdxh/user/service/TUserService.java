@@ -1,6 +1,7 @@
 package cn.zdxh.user.service;
 
 import cn.zdxh.commons.dto.TUserDTO;
+import cn.zdxh.commons.dto.TUserDetailDTO;
 import cn.zdxh.commons.entity.TUser;
 import cn.zdxh.commons.form.TUserForm;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -26,4 +27,6 @@ public interface TUserService extends IService<TUser> {
     TUserDTO adminLogin(TUserDTO tUserDTO);
 
     List<TUser> findAll();
+
+    TUserDetailDTO findByIdOnFront(Integer userId);
 }

@@ -18,6 +18,48 @@
         <result column="top_name" property="topName"/>
     </resultMap>
 
+    <!-- 列表查询映射结果 -->
+    <resultMap id="FrontResultMap" type="cn.zdxh.commons.dto.TInvitationFrontDTO">
+        <id column="id" property="id" />
+        <result column="inv_content" property="invContent" />
+        <result column="inv_type" property="invType" />
+        <result column="inv_image" property="invImage" />
+        <result column="inv_video" property="invVideo" />
+        <result column="top_id" property="topId" />
+        <result column="inv_laud" property="invLaud" />
+        <result column="inv_share" property="invShare" />
+        <result column="create_time" property="createTime" />
+        <result column="top_name" property="topName"/>
+        <result column="userId" property="userId"/>
+        <result column="username" property="username"/>
+        <result column="nickname" property="nickname"/>
+        <result column="image" property="image"/>
+    </resultMap>
+
+    <!-- 详情查询映射结果 -->
+    <resultMap id="DetailResultMap" type="cn.zdxh.commons.dto.TInvitationDetailDTO">
+        <id column="invId" property="id" />
+        <result column="inv_content" property="invContent" />
+        <result column="inv_type" property="invType" />
+        <result column="inv_image" property="invImage" />
+        <result column="inv_video" property="invVideo" />
+        <result column="inv_laud" property="invLaud" />
+        <result column="inv_share" property="invShare" />
+        <result column="inv_collect" property="invCollect"/>
+        <result column="invTime" property="createTime" />
+        <collection property="commentList" javaType="java.util.List" ofType="cn.zdxh.commons.dto.TCommentDTO" >
+            <id column="comId" property="id"></id>
+            <result column="com_content" property="comContent"/>
+            <result column="com_image" property="comImage"/>
+            <result column="com_laud" property="comLaud"/>
+            <result column="comTime" property="createTime"/>
+            <result column="userId" property="userId"/>
+            <result column="username" property="username"/>
+            <result column="nickname" property="nickname"/>
+            <result column="userImage" property="image"/>
+        </collection>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         inv.id, inv.inv_content, inv.inv_type, inv.inv_image, inv.inv_video, inv.top_id, inv.inv_laud, inv.inv_share, inv.create_time ,top.top_name
@@ -46,6 +88,30 @@
                 AND top.top_name LIKE "%"#{tInvitation.topName}"%"
             </if>
         </where>
+    </select>
+
+    <select id="findAllByInvitationOnFront" resultMap="FrontResultMap">
+        SELECT
+          inv.*,top.top_name,u.id AS userId,u.username,u.nickname,u.image
+        FROM t_invitation inv
+        LEFT JOIN t_topic top
+        ON inv.top_id = top.id
+        LEFT JOIN t_user u
+        ON inv.user_id = u.id
+        ORDER BY inv.create_time DESC
+    </select>
+
+    <select id="findByIdOnFront" resultMap="DetailResultMap">
+       SELECT inv.id AS invId,inv.inv_content,inv.inv_type,inv.inv_image,inv.inv_video,inv.inv_laud,inv.inv_share,inv.inv_collect,inv.create_time AS invTime,
+          com.id AS comId,com.com_content,com.com_image,com.com_laud,com.create_time AS comTime,
+          u.id AS userId,u.username,u.nickname,u.image AS userImage
+        FROM t_invitation inv
+        LEFT JOIN t_comment com
+        ON inv.id = com.inv_id
+        LEFT JOIN t_user u
+        ON com.user_id = u.id
+        WHERE inv.id = #{id}
+        ORDER BY com.create_time DESC
     </select>
 
 

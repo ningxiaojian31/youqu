@@ -29,4 +29,26 @@ public class RedisController {
     public Result get(@PathVariable String key) {
         return ResultHelper.createSuccess(redisService.get(key));
     }
+
+    @PostMapping("redis/set/put/{key}/{val}")
+    public Result putSet(@PathVariable String key, @PathVariable Object val) {
+        redisService.putSet(key,val);
+        return ResultHelper.createSuccess(null);
+    }
+
+    @GetMapping(value = "redis/set/count/{key}")
+    public Result putSetCount(@PathVariable String key) {
+        return ResultHelper.createSuccess(redisService.putSetCount(key));
+    }
+
+    @PostMapping("redis/set/or/{key}/{val}")
+    public Result putSetOr(@PathVariable String key, @PathVariable Object val) {
+        return ResultHelper.createSuccess(redisService.putSetOr(key,val));
+    }
+
+    @PostMapping("redis/set/move/{key}/{val}")
+    public Result moveSet(@PathVariable String key, @PathVariable Object val) {
+        redisService.moveSet(key,val);
+        return ResultHelper.createSuccess(null);
+    }
 }

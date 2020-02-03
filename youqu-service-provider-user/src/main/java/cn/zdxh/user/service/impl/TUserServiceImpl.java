@@ -1,13 +1,16 @@
 package cn.zdxh.user.service.impl;
 
 import cn.zdxh.commons.dto.TUserDTO;
+import cn.zdxh.commons.dto.TUserDetailDTO;
+import cn.zdxh.commons.entity.TFocusFans;
 import cn.zdxh.commons.entity.TUser;
 import cn.zdxh.commons.form.TUserForm;
 import cn.zdxh.commons.utils.JwtUtils;
 import cn.zdxh.commons.utils.Result;
-import cn.zdxh.commons.utils.ResultHelper;
 import cn.zdxh.commons.utils.WebRuntimeException;
+import cn.zdxh.user.enums.FansFocusEnum;
 import cn.zdxh.user.client.RedisClient;
+import cn.zdxh.user.mapper.TFocusFansMapper;
 import cn.zdxh.user.mapper.TUserMapper;
 import cn.zdxh.user.service.IMessageProvider;
 import cn.zdxh.user.service.TUserService;
@@ -20,7 +23,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.DigestUtils;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +47,9 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
 
     @Autowired
     private RedisClient redisClient;
+
+    @Autowired
+    private TFocusFansMapper tFocusFansMapper;
 
 
     @Override
@@ -133,6 +138,35 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
     @Override
     public List<TUser> findAll() {
         return tUserMapper.findAll();
+    }
+
+    @Override
+    public TUserDetailDTO findByIdOnFront(Integer userId) {
+        TUserDetailDTO detailDTO = new TUserDetailDTO();
+        TUser tUser = tUserMapper.selectById(userId);
+        if (tUser == null){
+            throw new WebRuntimeException("没有该用户！");
+        }
+        BeanUtils.copyProperties(tUser,detailDTO);
+        //查询粉丝和关注
+        List<TFocusFans> focusFansList = tFocusFansMapper.findFocusAndFansByUserId(userId);
+        if (!CollectionUtils.isEmpty(focusFansList)){
+            Integer fans = 0;
+            Integer focus = 0;
+            for (TFocusFans focusFans : focusFansList){
+                if (detailDTO.getId() == focusFans.getUserId()){
+                    if (focusFans.getType() == FansFocusEnum.FANS_ENUM.getType()){
+                        fans = fans + 1;
+                    }else if (focusFans.getType() == FansFocusEnum.FOCUS_ENUM.getType()){
+                        focus = focus + 1;
+                    }
+                }
+
+            }
+            detailDTO.setFans(fans);
+            detailDTO.setFocus(focus);
+        }
+        return detailDTO;
     }
 
     public TUser loginCheck(TUserDTO tUserDTO){

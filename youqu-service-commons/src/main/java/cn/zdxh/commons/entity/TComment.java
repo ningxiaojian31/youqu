@@ -3,6 +3,8 @@ package cn.zdxh.commons.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,6 +17,7 @@ import java.util.Date;
  * @author Justin
  * @since 2019-11-11
  */
+@Data
 public class TComment extends Model<TComment> {
 
     private static final long serialVersionUID = 1L;
@@ -47,79 +50,7 @@ public class TComment extends Model<TComment> {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getComContent() {
-        return comContent;
-    }
-
-    public void setComContent(String comContent) {
-        this.comContent = comContent;
-    }
-
-    public String getComImage() {
-        return comImage;
-    }
-
-    public void setComImage(String comImage) {
-        this.comImage = comImage;
-    }
-
-    public String getComLaud() {
-        return comLaud;
-    }
-
-    public void setComLaud(String comLaud) {
-        this.comLaud = comLaud;
-    }
-
-    public Integer getInvId() {
-        return invId;
-    }
-
-    public void setInvId(Integer invId) {
-        this.invId = invId;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "TComment{" +
-        ", id=" + id +
-        ", comContent=" + comContent +
-        ", comImage=" + comImage +
-        ", comLaud=" + comLaud +
-        ", invId=" + invId +
-        ", userId=" + userId +
-        ", createTime=" + createTime +
-        "}";
-    }
 }

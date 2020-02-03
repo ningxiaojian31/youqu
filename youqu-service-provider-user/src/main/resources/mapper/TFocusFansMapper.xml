@@ -17,4 +17,19 @@
         id, user_id, friend_id, type, create_time
     </sql>
 
+    <delete id="moveFocus" parameterType="cn.zdxh.commons.entity.TFocusFans">
+        DELETE FROM t_focus_fans
+        WHERE (user_id = #{userId} AND friend_id = #{friendId} AND type = 1) OR (friend_id = #{userId} AND user_id = #{friendId} AND type = 2)
+    </delete>
+
+    <select id="orFocus" parameterType="cn.zdxh.commons.entity.TFocusFans" resultType="cn.zdxh.commons.entity.TFocusFans">
+        SELECT * FROM t_focus_fans tff
+        WHERE tff.user_id = #{userId} AND tff.friend_id = #{friendId} AND tff.type = 1
+    </select>
+
+    <select id="findFocusAndFansByUserId" parameterType="int" resultMap="BaseResultMap">
+        SELECT * FROM t_focus_fans
+        WHERE user_id = #{userId} OR friend_id = #{userId}
+    </select>
+
 </mapper>

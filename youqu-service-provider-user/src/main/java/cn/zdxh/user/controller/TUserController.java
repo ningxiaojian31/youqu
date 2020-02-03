@@ -94,6 +94,12 @@ public class TUserController {
         return ResultHelper.createSuccess(tUserService.adminLogin(tUserDTO));
     }
 
+    @ApiOperation("查询用户详情/前台")
+    @GetMapping("/front/get/{userId}")
+    public Result frontGet(@PathVariable Integer userId){
+        return ResultHelper.createSuccess(tUserService.findByIdOnFront(userId));
+    }
+
 //    @GetMapping("/test")
 //    public Result testStream(){
 //        Result result = new Result();

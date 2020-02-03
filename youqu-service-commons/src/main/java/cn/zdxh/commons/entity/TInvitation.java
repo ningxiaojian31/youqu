@@ -3,8 +3,9 @@ package cn.zdxh.commons.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 
-import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,6 +16,7 @@ import java.util.Date;
  * @author Justin
  * @since 2019-11-11
  */
+@Data
 public class TInvitation extends Model<TInvitation> {
 
     private static final long serialVersionUID = 1L;
@@ -45,6 +47,10 @@ public class TInvitation extends Model<TInvitation> {
      */
     private Integer topId;
     /**
+     * 用户id
+     */
+    private Integer userId;
+    /**
      * 点赞数
      */
     private String invLaud;
@@ -53,99 +59,14 @@ public class TInvitation extends Model<TInvitation> {
      */
     private String invShare;
     /**
+     * 收藏数
+     */
+    private String invCollect;
+    /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date createTime;
 
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getInvContent() {
-        return invContent;
-    }
-
-    public void setInvContent(String invContent) {
-        this.invContent = invContent;
-    }
-
-    public Integer getInvType() {
-        return invType;
-    }
-
-    public void setInvType(Integer invType) {
-        this.invType = invType;
-    }
-
-    public String getInvImage() {
-        return invImage;
-    }
-
-    public void setInvImage(String invImage) {
-        this.invImage = invImage;
-    }
-
-    public String getInvVideo() {
-        return invVideo;
-    }
-
-    public void setInvVideo(String invVideo) {
-        this.invVideo = invVideo;
-    }
-
-    public Integer getTopId() {
-        return topId;
-    }
-
-    public void setTopId(Integer topId) {
-        this.topId = topId;
-    }
-
-    public String getInvLaud() {
-        return invLaud;
-    }
-
-    public void setInvLaud(String invLaud) {
-        this.invLaud = invLaud;
-    }
-
-    public String getInvShare() {
-        return invShare;
-    }
-
-    public void setInvShare(String invShare) {
-        this.invShare = invShare;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    @Override
-    protected Serializable pkVal() {
-        return this.id;
-    }
-
-    @Override
-    public String toString() {
-        return "TInvitation{" +
-        ", id=" + id +
-        ", invContent=" + invContent +
-        ", invType=" + invType +
-        ", invImage=" + invImage +
-        ", invVideo=" + invVideo +
-        ", topId=" + topId +
-        ", invLaud=" + invLaud +
-        ", invShare=" + invShare +
-        ", createTime=" + createTime +
-        "}";
-    }
 }
