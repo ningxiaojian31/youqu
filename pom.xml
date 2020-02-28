@@ -14,8 +14,6 @@
     <!--子模块-->
     <modules>
         <module>youqu-service-commons</module>
-        <module>youqu-service-consumer-front</module>
-        <module>youqu-service-consumer-back</module>
         <module>youqu-service-eureka</module>
         <module>youqu-service-other</module>
         <module>youqu-service-provider-chat</module>
