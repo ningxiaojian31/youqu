@@ -1,10 +1,2 @@
-server:
-  port: 9200
-spring:
-  application:
-    name: youqu-service-commons
-eureka:
-  client:
-    service-url:
-      defaultZone: http://localhost:9000/eureka/ #\u6CE8\u518C\u5230\u521A\u624D\u90A3\u53F0Eureka Server\u5730\u5740
+
 

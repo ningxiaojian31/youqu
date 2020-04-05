@@ -8,7 +8,9 @@ import cn.zdxh.commons.entity.TInvitation;
 import cn.zdxh.commons.form.CollectForm;
 import cn.zdxh.commons.form.LaudForm;
 import cn.zdxh.commons.utils.Result;
+import cn.zdxh.commons.utils.WebRuntimeException;
 import cn.zdxh.invitation.client.RedisClient;
+import cn.zdxh.invitation.enums.CollectAndLaudEnum;
 import cn.zdxh.invitation.mapper.TInvitationMapper;
 import cn.zdxh.invitation.service.TInvitationService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -21,6 +23,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * <p>
@@ -57,7 +60,7 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
         if (detailDTO != null){
             //获取帖子赞总数
             if (detailDTO.getId() != null){
-                Integer laud = countLaud("laud-inv-" + detailDTO.getId());
+                Integer laud = countLaud(CollectAndLaudEnum.LAUD_INV.getName() + detailDTO.getId());
                 if (laud != null){
                     detailDTO.setInvLaud(String.valueOf(laud));
                 }
@@ -68,7 +71,7 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
             if (!CollectionUtils.isEmpty(commentList)){
                 commentList.stream().forEach(comment -> {
                     if (comment != null && comment.getId() != null){
-                        Integer laud = countLaud("laud-com-" +detailDTO.getId()+"-"+ comment.getId());
+                        Integer laud = countLaud(CollectAndLaudEnum.LAUD_COM.getName() +detailDTO.getId()+"-"+ comment.getId());
                         if (laud != null){
                             comment.setComLaud(String.valueOf(laud));
                         }
@@ -119,5 +122,22 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
     public CollectForm addCollect(CollectForm collectForm) {
         redisClient.putSet(collectForm.getUserId(),collectForm.getPoId());
         return collectForm;
+    }
+
+    @Override
+    public Page findCollectAllByUserId(Page page, Integer userId) {
+        //收藏的key表达式
+        String key = CollectAndLaudEnum.COLLEC_INV.getName()+userId;
+        Result result = redisClient.getSet(key);
+        if (result.getCode()!= null && result.getCode() == 1){
+            List<String> ids = (List<String>)result.getData();
+            //根据id集合查询所有帖子
+            if (!CollectionUtils.isEmpty(ids)){
+                page.setRecords(tInvitationMapper.selectBatchIds(ids));//这里实际上没做分页
+            }
+        }else {
+            throw new WebRuntimeException("查询收藏失败");
+        }
+        return page;
     }
 }

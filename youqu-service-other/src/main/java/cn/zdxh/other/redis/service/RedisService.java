@@ -1,5 +1,8 @@
 package cn.zdxh.other.redis.service;
 
+import java.util.List;
+import java.util.Set;
+
 public interface RedisService {
 
     /**
@@ -55,4 +58,18 @@ public interface RedisService {
     Boolean putSetOr(String key, Object val);
 
     void moveSet(String key, Object val);
+
+    /**
+     * 通过模糊查询，获取收藏的帖子
+     * @param key
+     * @return
+     */
+    Set<String> getTypeKeys(String key);
+
+    /**
+     * 根据key获取set集合
+     * @param key
+     * @return
+     */
+    Set<Object> getSet(String key);
 }

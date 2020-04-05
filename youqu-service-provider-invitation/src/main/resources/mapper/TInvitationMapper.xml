@@ -84,6 +84,9 @@
             <if test="tInvitation.invShare != null and tInvitation.invShare != ''">
                 AND inv.inv_share = #{tInvitation.invShare}
             </if>
+            <if test="tInvitation.userId != null">
+                AND inv.user_id = #{tInvitation.userId}
+            </if>
             <if test="tInvitation.topName != null and tInvitation.topName != ''">
                 AND top.top_name LIKE "%"#{tInvitation.topName}"%"
             </if>

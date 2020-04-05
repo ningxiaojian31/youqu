@@ -21,20 +21,20 @@ spring:
           group: myInput  #queue\u540D
 
   redis:
-    host: 134.175.168.124   #redis相关配置
+    host: 134.175.168.124   #redis相关配置 134.175.168.124
     port: 6379
     lettuce:
       pool:
-        max-active: 8
-        max-idle: 8
-        max-wait: -1ms
+        max-active: 3
+        max-idle: 3
+        max-wait: 6000ms # -1ms不超时
         min-idle: 0
     password: 25802580
 
   rabbitmq: # RabbitMQ相关配置
-    addresses: 134.175.168.124:5672
+    addresses: 134.175.168.124:5672    #134.175.168.124:5672
     username: guest
-    password: guest
+    password: 25802580
 
   # QQ邮箱设置
   mail:

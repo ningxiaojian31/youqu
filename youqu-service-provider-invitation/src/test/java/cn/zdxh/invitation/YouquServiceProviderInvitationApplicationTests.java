@@ -16,6 +16,17 @@ class YouquServiceProviderInvitationApplicationTests {
     private TInvitationMapper mapper;
     @Test
     void contextLoads() {
+        String str = "abcccd";
+        //真正的值
+        String res = String.valueOf(str.charAt(0));
+        for (int i=1;i < str.length();i++){
+
+            if (!res.contains(String.valueOf(str.charAt(i)))){
+                res = res + str.charAt(i);
+            }
+
+        }
+        System.out.println(res);
     }
 
 }

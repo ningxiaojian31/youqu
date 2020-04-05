@@ -26,4 +26,9 @@ public interface RedisClient {
     //取消收藏
     @PostMapping("redis/set/move/{key}/{val}")
     Result moveSet(@PathVariable String key, @PathVariable Object val);
+
+    //根据收藏人查询收藏的帖子
+    @GetMapping(value = "redis/set/{key}")
+    Result getSet(@PathVariable String key);
+
 }

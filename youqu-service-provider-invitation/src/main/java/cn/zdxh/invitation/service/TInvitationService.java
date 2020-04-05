@@ -38,4 +38,6 @@ public interface TInvitationService extends IService<TInvitation> {
     Boolean orCollect(CollectForm collectForm);
 
     CollectForm addCollect(CollectForm collectForm);
+
+    Page findCollectAllByUserId(Page page, Integer userId);
 }

@@ -26,9 +26,22 @@ zuul:
     youqu-user:
       path: /user/**
       serviceId: youqu-service-provider-user
-  host:
-    connect-timeout-millis: 12000 # 超时时间12秒
-    socket-timeout-millis: 11000
+  retryable: true #开启重试机制
+
 ribbon:
+  ConnectTimeout: 10000
   ReadTimeout: 10000  # 超时时间10秒
-  SocketTimeout: 10000
+  MaxAutoRetries: 1 # 默认0
+  MaxAutoRetriesNextServer: 1 #默认1
+
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 80000  # 80秒
+
+# 配置公式：ribbonTimeout = (ribbonReadTimeout + ribbonConnectTimeout) * (maxAutoRetries + 1) * (maxAutoRetriesNextServer + 1)
+# hystrixTimeout >= ribbonTimeout 否则无意义

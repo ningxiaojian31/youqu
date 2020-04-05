@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -98,6 +99,41 @@ public class TUserController {
     @GetMapping("/front/get/{userId}")
     public Result frontGet(@PathVariable Integer userId){
         return ResultHelper.createSuccess(tUserService.findByIdOnFront(userId));
+    }
+
+    @ApiOperation("查询用户个人信息/前台")
+    @GetMapping("/front/info/get/{userId}")
+    public Result findInfoByIdFront(@PathVariable Integer userId){
+        return ResultHelper.createSuccess(tUserService.getById(userId));
+    }
+
+    @ApiOperation("我的页面/前台")
+    @GetMapping("/front/personal/get/{userId}")
+    public Result findPersonByIdFront(@PathVariable Integer userId){
+        return ResultHelper.createSuccess(tUserService.getPersonById(userId));
+    }
+
+    @ApiOperation("修改用户个人信息/前台")
+    @PostMapping("/front/info")
+    public Result updateUserInfoFront(@RequestBody TUser tUser){
+        tUser.setModifyTime(new Date());
+        boolean result = tUserService.updateById(tUser);
+        if (result){
+            return ResultHelper.createSuccess(tUser);
+        }else {
+            return ResultHelper.createError("保存失败");
+        }
+    }
+
+    @ApiOperation("测试")
+    @GetMapping("/timeout")
+    public Result timeout(){
+        try {
+            Thread.sleep(4000);
+        } catch (InterruptedException e) {
+           throw new WebRuntimeException("超时异常");
+        }
+        return ResultHelper.createSuccess("超时成功");
     }
 
 //    @GetMapping("/test")

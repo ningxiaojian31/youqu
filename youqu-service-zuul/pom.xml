@@ -20,7 +20,6 @@
         <dependency>
             <groupId>cn.zdxh</groupId>
             <artifactId>youqu-service-commons</artifactId>
-            <version>${project.commons.version}</version>
         </dependency>
 
         <!--JWT-->
@@ -60,17 +59,6 @@
         </dependency>
     </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>
@@ -85,7 +73,10 @@
         <repository>
             <id>spring-milestones</id>
             <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
+            <url>http://maven.apache.org/plugins/index.html</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </repository>
     </repositories>
 

@@ -20,6 +20,7 @@
     <result column="has_delete" property="hasDelete" jdbcType="INTEGER" />
     <result column="message" property="message" jdbcType="VARCHAR" />
     <result column="nickname" property="nickname" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="image" property="image" jdbcType="VARCHAR" />
   </resultMap>
 
@@ -60,7 +61,7 @@
   </update>
 
     <select id="findListByUserId" parameterType="cn.zdxh.chat.pojo.TbChatRecord" resultMap="ListResultMap">
-      (SELECT  temp.id, temp.userid, temp.friendid, temp.has_read, temp.createtime, temp.has_delete, temp.message, u.nickname, u.image
+      (SELECT  temp.id, temp.userid, temp.friendid, temp.has_read, temp.createtime, temp.has_delete, temp.message, u.nickname, u.username,u.image
         FROM (SELECT t.friendid,any_value(t.id)AS id,any_value(t.userid) AS userid,any_value(t.has_delete) AS has_delete,
         any_value(t.has_read) AS has_read,any_value(t.createtime) AS createtime,any_value(t.message) AS message
        FROM
@@ -76,7 +77,7 @@
       LEFT JOIN t_user u
       ON temp.friendid = u.id)
       UNION ALL
-      (SELECT  temp2.id, temp2.userid, temp2.friendid, temp2.has_read, temp2.createtime, temp2.has_delete, temp2.message, u2.nickname, u2.image
+      (SELECT  temp2.id, temp2.userid, temp2.friendid, temp2.has_read, temp2.createtime, temp2.has_delete, temp2.message, u2.nickname,u2.username, u2.image
        FROM (SELECT any_value(t2.friendid)AS friendid,any_value(t2.id)AS id,t2.userid,any_value(t2.has_delete) AS has_delete,
         any_value(t2.has_read) AS has_read,any_value(t2.createtime) AS createtime,any_value(t2.message) AS message
       FROM

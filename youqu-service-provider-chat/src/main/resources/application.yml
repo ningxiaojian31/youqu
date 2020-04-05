@@ -7,7 +7,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://134.175.168.124:3306/youqu?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     username: root
-    password: 123456
+    password: Aa123456.*
   jackson:
     time-zone: GMT+8
 

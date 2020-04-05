@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -49,5 +46,13 @@ public class TFocusFansController {
     public Result orFocus(@RequestBody TFocusFans tFocusFans){
         return ResultHelper.createSuccess(tFocusFansService.orFocus(tFocusFans));
     }
+
+    @ApiOperation("查询关注/粉丝")
+    @GetMapping("/focusOrFans/list")
+    public Result focusOrFansList(@RequestParam(name = "userId") Integer userId,
+                                  @RequestParam(name = "type") Integer type){
+        return ResultHelper.createSuccess(tFocusFansService.findAllFocusOrFansByUserId(type,userId));
+    }
+
 }
 

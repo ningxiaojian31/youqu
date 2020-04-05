@@ -24,6 +24,8 @@ public class TbChatRecordVO {
 
     private String nickname;
 
+    private String username;
+
     private String image;
 
 

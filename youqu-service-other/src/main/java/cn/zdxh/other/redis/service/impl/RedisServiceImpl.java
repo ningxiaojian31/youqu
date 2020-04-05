@@ -10,6 +10,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -64,5 +65,15 @@ public class RedisServiceImpl implements RedisService {
     @Override
     public void moveSet(String key, Object val) {
         redisTemplate.opsForSet().remove(key,val);
+    }
+
+    @Override
+    public Set<String> getTypeKeys(String key) {
+        return redisTemplate.keys(key);
+    }
+
+    @Override
+    public Set<Object> getSet(String key) {
+        return redisTemplate.opsForSet().members(key);
     }
 }

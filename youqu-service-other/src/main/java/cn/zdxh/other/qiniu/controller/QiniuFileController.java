@@ -39,23 +39,36 @@ public class QiniuFileController {
         //新文件名
         String newFilePath = UUID.randomUUID() +originalFilename.substring(originalFilename.lastIndexOf("."));
         //进行流转换
-        InputStream is = file.getInputStream();
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] b = new byte[1024];
-        int len = -1;
-        while ((len = is.read(b)) != -1) {
-            bos.write(b, 0, len);
+        InputStream is = null;
+        ByteArrayOutputStream bos = null;
+        try{
+            is = file.getInputStream();
+            bos = new ByteArrayOutputStream();
+            byte[] b = new byte[1024];
+            int len = -1;
+            while ((len = is.read(b)) != -1) {
+                bos.write(b, 0, len);
+            }
+            byte[] uploadBytes = bos.toByteArray();
+            //进行上传
+            boolean uploadResult = qiniuFileService.upload(uploadBytes, newFilePath);
+            if (!uploadResult){
+                result.error("上传失败，请检查网络！");
+                return result;
+            }
+            //图片访问路径
+            String urlPath = qiniu.getUrl()+newFilePath;
+            result.success(urlPath);
+        }finally {
+            //关闭流
+            if (is != null){
+                is.close();
+            }
+            if (bos != null){
+                bos.close();
+            }
         }
-        byte[] uploadBytes = bos.toByteArray();
-        //进行上传
-        boolean uploadResult = qiniuFileService.upload(uploadBytes, newFilePath);
-        if (!uploadResult){
-            result.error("上传失败，请检查网络！");
-            return result;
-        }
-        //图片访问路径
-        String urlPath = qiniu.getUrl()+newFilePath;
-        result.success(urlPath);
+
         return result;
     }
 

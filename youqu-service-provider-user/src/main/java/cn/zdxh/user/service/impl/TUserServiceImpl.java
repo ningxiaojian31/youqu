@@ -2,6 +2,7 @@ package cn.zdxh.user.service.impl;
 
 import cn.zdxh.commons.dto.TUserDTO;
 import cn.zdxh.commons.dto.TUserDetailDTO;
+import cn.zdxh.commons.dto.TUserPersonDTO;
 import cn.zdxh.commons.entity.TFocusFans;
 import cn.zdxh.commons.entity.TUser;
 import cn.zdxh.commons.form.TUserForm;
@@ -167,6 +168,29 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
             detailDTO.setFocus(focus);
         }
         return detailDTO;
+    }
+
+    @Override
+    public TUserPersonDTO getPersonById(Integer userId) {
+        //查询个人信息
+        TUser tUser = tUserMapper.selectById(userId);
+        if (tUser == null){
+            throw new WebRuntimeException("查无此人");
+        }
+        TUserPersonDTO personDTO = new TUserPersonDTO();
+        BeanUtils.copyProperties(tUser,personDTO);
+        //查询关注数和粉丝数
+        QueryWrapper<TFocusFans> wrapperFocus = new QueryWrapper();
+        QueryWrapper<TFocusFans> wrapperFans = new QueryWrapper();
+        wrapperFocus.eq("user_id",userId);
+        wrapperFocus.eq("type",FansFocusEnum.FOCUS_ENUM.getType());
+        wrapperFans.eq("user_id",userId);
+        wrapperFans.eq("type",FansFocusEnum.FANS_ENUM.getType());
+        //封装
+        personDTO.setFocusCount(String.valueOf(tFocusFansMapper.selectCount(wrapperFocus)));
+        personDTO.setFansCount(String.valueOf(tFocusFansMapper.selectCount(wrapperFans)));
+
+        return personDTO;
     }
 
     public TUser loginCheck(TUserDTO tUserDTO){

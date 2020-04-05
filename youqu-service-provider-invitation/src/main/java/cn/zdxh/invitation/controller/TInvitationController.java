@@ -129,5 +129,22 @@ public class TInvitationController {
     public Result orCollect(@RequestBody CollectForm collectForm){
         return ResultHelper.createSuccess(tInvitationService.orCollect(collectForm));
     }
+
+    @ApiOperation("查询收藏帖子/前台")
+    @GetMapping("/front/collect/list")
+    public Result collectList(@RequestParam(value = "userId",required = true) Integer userId,
+                       @RequestParam(value = "currentPage",required = false) Integer currentPage,
+                       @RequestParam(value = "pageSize",required = false) Integer pageSize){
+        //分页查询
+        Page page = new Page();
+        page.setCurrent(currentPage != null ? currentPage : 1);
+        page.setSize(pageSize != null ? pageSize : 10);
+        return ResultHelper.createSuccess(tInvitationService.findCollectAllByUserId(page,userId));
+    }
+
+    @GetMapping(value = "memory")
+    public Result memory() {
+        return ResultHelper.createSuccess(sun.misc.VM.maxDirectMemory()/(double)1024/1024+"MB");
+    }
 }
 

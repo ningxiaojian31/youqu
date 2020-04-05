@@ -1,7 +1,9 @@
 package cn.zdxh.user.service;
 
 import cn.zdxh.commons.entity.TFocusFans;
+import cn.zdxh.commons.entity.TUser;
 import com.baomidou.mybatisplus.extension.service.IService;
+import org.apache.catalina.User;
 
 import java.util.List;
 
@@ -22,4 +24,7 @@ public interface TFocusFansService extends IService<TFocusFans> {
     Boolean orFocus(TFocusFans tFocusFans);
 
     List<TFocusFans> findFocusAndFansByUserId(Integer userId);
+
+    List<TUser> findAllFocusOrFansByUserId(Integer type,Integer userId);
+
 }
