@@ -7,10 +7,7 @@ import cn.zdxh.commons.dto.TInvitationFrontDTO;
 import cn.zdxh.commons.entity.TInvitation;
 import cn.zdxh.commons.form.CollectForm;
 import cn.zdxh.commons.form.LaudForm;
-import cn.zdxh.commons.utils.PageUtils;
-import cn.zdxh.commons.utils.Result;
-import cn.zdxh.commons.utils.ResultHelper;
-import cn.zdxh.commons.utils.WebRuntimeException;
+import cn.zdxh.commons.utils.*;
 import cn.zdxh.invitation.service.TInvitationService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -40,6 +37,7 @@ public class TInvitationController {
     @Autowired
     private TInvitationService tInvitationService;
 
+    @SystemLog(type = SystemLogEnum.SAVE_LOG)
     @ApiOperation("保存帖子")
     @PostMapping("/save")
     public Result save(@RequestBody TInvitation tInvitation){
@@ -87,6 +85,7 @@ public class TInvitationController {
         return ResultHelper.createSuccess(tInvitationService.findAllByInvitationOnFront(page));
     }
 
+    @SystemLog(type = SystemLogEnum.DELETE_LOG)
     @ApiOperation("删除帖子")
     @DeleteMapping("/del/{id}")
     public Result delete(@PathVariable("id") Integer id){
@@ -97,6 +96,7 @@ public class TInvitationController {
         return ResultHelper.createError("删除帖子失败");
     }
 
+    @SystemLog(type = SystemLogEnum.LAUD_LOG)
     @ApiOperation("点赞/只允许点赞一次")
     @PostMapping("/laud/add")
     public Result addLaud(@RequestBody LaudForm laudForm){
@@ -110,6 +110,7 @@ public class TInvitationController {
         return ResultHelper.createSuccess(tInvitationService.countLaud(poId));
     }
 
+    @SystemLog(type = SystemLogEnum.COLLECT_LOG)
     @ApiOperation("收藏")
     @PostMapping("/collect/add")
     public Result addCollect(@RequestBody CollectForm collectForm){
@@ -142,9 +143,5 @@ public class TInvitationController {
         return ResultHelper.createSuccess(tInvitationService.findCollectAllByUserId(page,userId));
     }
 
-    @GetMapping(value = "memory")
-    public Result memory() {
-        return ResultHelper.createSuccess(sun.misc.VM.maxDirectMemory()/(double)1024/1024+"MB");
-    }
 }
 

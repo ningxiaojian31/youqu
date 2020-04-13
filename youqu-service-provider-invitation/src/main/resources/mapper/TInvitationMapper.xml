@@ -62,7 +62,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        inv.id, inv.inv_content, inv.inv_type, inv.inv_image, inv.inv_video, inv.top_id, inv.inv_laud, inv.inv_share, inv.create_time ,top.top_name
+        inv.id, inv.inv_content, inv.inv_type, inv.inv_image, inv.inv_video, inv.top_id, inv.inv_laud, inv.inv_share,inv.inv_status, inv.create_time ,top.top_name
     </sql>
 
     <select id="findAllByInvitation" parameterType="cn.zdxh.commons.dto.TInvitationDTO" resultMap="BaseResultMap">
@@ -101,6 +101,7 @@
         ON inv.top_id = top.id
         LEFT JOIN t_user u
         ON inv.user_id = u.id
+        WHERE inv.inv_status = 1
         ORDER BY inv.create_time DESC
     </select>
 
@@ -113,9 +114,17 @@
         ON inv.id = com.inv_id
         LEFT JOIN t_user u
         ON com.user_id = u.id
-        WHERE inv.id = #{id}
+        WHERE inv.id = #{id} AND inv.inv_status = 1
         ORDER BY com.create_time DESC
     </select>
+
+    <update id="updateBatchByIds" parameterType="java.util.List">
+        UPDATE t_invitation SET inv_status = 1
+        WHERE id IN
+        <foreach collection="ids" separator="," open="(" item="id" close=")">
+            #{id}
+        </foreach>
+    </update>
 
 
 </mapper>

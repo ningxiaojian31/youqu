@@ -1,5 +1,6 @@
 package cn.zdxh.invitation.mapper;
 
+import cn.zdxh.commons.dto.TCommentBackDTO;
 import cn.zdxh.commons.entity.TComment;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -17,5 +18,5 @@ import java.util.Map;
  * @since 2019-11-11
  */
 public interface TCommentMapper extends BaseMapper<TComment> {
-    List<TComment> findAllByComment(Page page, @Param("tComment") TComment tComment);
+    List<TCommentBackDTO> findAllByCommentDTO(Page page, @Param("tComment") TCommentBackDTO tComment);
 }

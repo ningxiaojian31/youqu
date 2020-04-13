@@ -7,4 +7,6 @@ import lombok.Data;
 public class TInvitationDTO extends TInvitation {
     //话题名字
     private String topName;
+    //审核状态
+    private String invStatusName;
 }

@@ -5,17 +5,14 @@
     <option name="originalFiles">
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-commons/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-zuul/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-oss/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-provider-invitation/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-provider-user/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-provider-chat/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-consumer-front/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-consumer-back/pom.xml" />
-        <option value="$PROJECT_DIR$/youqu-service-eureka/pom.xml" />
         <option value="$PROJECT_DIR$/generator/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/youqu-service-consumer-back/pom.xml" />
+        <option value="$PROJECT_DIR$/youqu-service-consumer-front/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">

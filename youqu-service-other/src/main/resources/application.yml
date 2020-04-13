@@ -8,17 +8,38 @@ server:
 spring:
   application:
     name: youqu-service-other
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://134.175.168.124:3306/youqu?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
+    username: root
+    password: Aa123456.*
   servlet:
     multipart:
       max-request-size: -1
       max-file-size: -1
   cloud:  # Spring Cloud Stream 相关配置
     stream:
-      bindings: # \u670D\u52A1\u7684\u6574\u5408\u5904\u7406
-        input: # \u8FD9\u4E2A\u540D\u5B57\u662F\u4E00\u4E2A\u901A\u9053\u7684\u540D\u79F0\uFF0C\u5728\u5206\u6790\u5177\u4F53\u6E90\u4EE3\u7801\u7684\u65F6\u5019\u4F1A\u8FDB\u884C\u8BF4\u660E
-          destination: myOutput # \u8868\u793A\u8981\u4F7F\u7528\u7684Exchange\u540D\u79F0\u5B9A\u4E49
-          content-type: application/json # \u8BBE\u7F6E\u6D88\u606F\u7C7B\u578B\uFF0C\u672C\u6B21\u4E3A\u5BF9\u8C61json\uFF0C\u5982\u679C\u662F\u6587\u672C\u5219\u8BBE\u7F6E\u201Ctext/plain\u201D
-          group: myInput  #queue\u540D
+      bindings: # exchange与queue绑定
+        email_input: # 邮件消费者设置input
+          destination: email.exchange # exchange
+          content-type: application/json # 消息传输类型
+          group: email.queue  # queue
+          binder: youqu_rabbit
+        log_input: # 日志消费者设置input
+          destination: log.exchange
+          content-type: application/json
+          group: log.queue
+          binder: youqu_rabbit
+      binders:
+        youqu_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 134.175.168.124
+                port: 5672
+                username: guest
+                password: 25802580
 
   redis:
     host: 134.175.168.124   #redis相关配置 134.175.168.124
@@ -31,21 +52,22 @@ spring:
         min-idle: 0
     password: 25802580
 
-  rabbitmq: # RabbitMQ相关配置
-    addresses: 134.175.168.124:5672    #134.175.168.124:5672
-    username: guest
-    password: 25802580
+#  rabbitmq: # RabbitMQ相关配置
+#    addresses: 134.175.168.124:5672    #134.175.168.124:5672
+#    username: guest
+#    password: 25802580
 
   # QQ邮箱设置
   mail:
     host: smtp.qq.com #发送邮件服务器
     username: 664650322@qq.com #发送邮件的邮箱地址
-    password:  qopfavkgytdqbehe #客户端授权码，不是邮箱密码，这个在qq邮箱设置里面自动生成的
+    password: knxorvvbedwybeah #客户端授权码，不是邮箱密码，这个在qq邮箱设置里面自动生成的
     properties.mail.smtp.port: 465 #端口号465或587
     from: 664650322@qq.com # 发送邮件的地址，和上面username一致
     properties.mail.smtp.starttls.enable: true
     properties.mail.smtp.starttls.required: true
     properties.mail.smtp.ssl.enable: true
+    properties.mail.smtp.auth: true
     default-encoding: utf-8
 
 # 邮件验证码过期时间
@@ -60,3 +82,14 @@ qiniu:
   bucket: youqu-xh
   url: http://qiniu.ningxiaojian.top/
 
+
+# mybatis-plus配置
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true # 开启驼峰命名法
+
+#日志打印
+logging:
+  level:
+    cn.zdxh.other.log.mapper : debug

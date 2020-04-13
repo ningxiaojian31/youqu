@@ -1,8 +1,10 @@
 package cn.zdxh.chat.service;
 
 
-import cn.zdxh.chat.pojo.TbChatRecord;
-import cn.zdxh.chat.pojo.TbChatRecordVO;
+import cn.zdxh.commons.dto.TbChatRecordBackDTO;
+import cn.zdxh.commons.entity.TbChatRecord;
+import cn.zdxh.commons.pojo.TbChatRecordVO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.util.List;
 
@@ -33,4 +35,6 @@ public interface ChatRecordService {
      * @param id 聊天记录的id
      */
     void updateStatusHasRead(String id);
+
+    Page findAllByChatRecord(Page page, TbChatRecordBackDTO chatRecord);
 }

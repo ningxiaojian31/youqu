@@ -15,29 +15,47 @@
         <result column="create_time" property="createTime" />
     </resultMap>
 
+    <resultMap id="BackResultMap" type="cn.zdxh.commons.dto.TCommentBackDTO">
+        <id column="id" property="id" />
+        <result column="com_content" property="comContent" />
+        <result column="com_image" property="comImage" />
+        <result column="com_laud" property="comLaud" />
+        <result column="inv_id" property="invId" />
+        <result column="user_id" property="userId" />
+        <result column="create_time" property="createTime" />
+        <result column="username" property="username"/>
+        <result column="inv_content" property="invContent"/>
+    </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         id, com_content, com_image, com_laud, inv_id, user_id, create_time
     </sql>
 
-    <select id="findAllByComment" parameterType="cn.zdxh.commons.entity.TComment" resultType="cn.zdxh.commons.entity.TComment">
+    <sql id="Back_Column_List">
+        com.id, com.com_content, com.com_image, com.com_laud, com.inv_id, com.user_id, com.create_time,u.username,inv.inv_content
+    </sql>
+
+    <select id="findAllByCommentDTO" parameterType="cn.zdxh.commons.dto.TCommentBackDTO" resultMap="BackResultMap">
         SELECT
-        <include refid="Base_Column_List"/>
-        FROM t_comment
+        <include refid="Back_Column_List"/>
+        FROM t_comment com
+        LEFT JOIN t_user u
+        ON com.user_id = u.id
+        LEFT JOIN t_invitation inv
+        ON com.inv_id = inv.id
         <where>
             <if test="tComment.comContent != null and tComment.comContent != ''">
-                AND com_content LIKE "%"#{tComment.comContent}"%"
+                AND com.com_content LIKE "%"#{tComment.comContent}"%"
             </if>
-            <if test="tComment.invId != null">
-                AND inv_id = #{tComment.invId}
+            <if test="tComment.username != null and tComment.username != ''">
+                AND u.username LIKE "%"#{tComment.username}"%"
             </if>
-            <if test="tComment.comLaud != null">
-                AND com_laud = #{tComment.comLaud}
-            </if>
-            <if test="tComment.userId != null">
-                AND user_id = #{tComment.userId}
+            <if test="tComment.invContent != null and tComment.invContent != ''">
+                AND inv.inv_content LIKE "%"#{tComment.invContent}"%"
             </if>
         </where>
+        ORDER BY com.create_time DESC
     </select>
 
 </mapper>

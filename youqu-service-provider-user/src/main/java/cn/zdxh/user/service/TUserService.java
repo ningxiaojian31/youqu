@@ -5,6 +5,7 @@ import cn.zdxh.commons.dto.TUserDetailDTO;
 import cn.zdxh.commons.dto.TUserPersonDTO;
 import cn.zdxh.commons.entity.TUser;
 import cn.zdxh.commons.form.TUserForm;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -32,4 +33,6 @@ public interface TUserService extends IService<TUser> {
     TUserDetailDTO findByIdOnFront(Integer userId);
 
     TUserPersonDTO getPersonById(Integer userId);
+
+    Page findAllByUser(Page page, TUser tUser);
 }

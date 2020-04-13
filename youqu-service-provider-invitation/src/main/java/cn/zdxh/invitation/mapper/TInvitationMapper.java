@@ -27,4 +27,5 @@ public interface TInvitationMapper extends BaseMapper<TInvitation> {
 
     List<TInvitationFrontDTO> findAllByInvitationOnFront(Page page);
 
+    void updateBatchByIds(@Param("ids") List<Integer> ids);
 }

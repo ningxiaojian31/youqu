@@ -1,8 +1,8 @@
 package cn.zdxh.chat.netty;
 
-import cn.zdxh.chat.pojo.TbChatRecord;
 import cn.zdxh.chat.service.ChatRecordService;
 import cn.zdxh.chat.util.SpringUtils;
+import cn.zdxh.commons.entity.TbChatRecord;
 import com.alibaba.fastjson.JSON;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;

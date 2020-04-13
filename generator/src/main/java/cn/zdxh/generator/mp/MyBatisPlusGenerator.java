@@ -2,9 +2,7 @@ package cn.zdxh.generator.mp;
 
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
 
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
@@ -33,12 +31,12 @@ public class MyBatisPlusGenerator {
                 .setBaseColumnList(true);//生成基本的SQL片段
 
         //2. 数据源配置
-        DataSourceConfig  dsConfig  = new DataSourceConfig();
+        DataSourceConfig dsConfig = new DataSourceConfig();
         dsConfig.setDbType(DbType.MYSQL)  // 设置数据库类型
                 .setDriverName("com.mysql.jdbc.Driver")
-                .setUrl("jdbc:mysql://47.107.126.98:3306/youqu")
+                .setUrl("jdbc:mysql://134.175.168.124:3306/youqu")
                 .setUsername("root")
-                .setPassword("123456");
+                .setPassword("Aa123456.*");
 
         //3. 策略配置globalConfiguration中
         StrategyConfig stConfig = new StrategyConfig();
@@ -46,7 +44,7 @@ public class MyBatisPlusGenerator {
                 .setDbColumnUnderline(true)  // 指定表名 字段名是否使用下划线
                 .setNaming(NamingStrategy.underline_to_camel) // 数据库表映射到实体的命名策略
                 //.setTablePrefix("tbl_")
-                .setInclude(new String[] { "t_chat_record","t_comment" ,"t_focus_fans","t_invitation","t_topic","t_user"});  // 生成的表
+                .setInclude(new String[]{"tb_chat_record", "t_comment", "t_focus_fans", "t_invitation", "t_topic", "t_user", "sys_log"});  // 生成的表
 
 
         //4. 包名策略配置
@@ -59,7 +57,7 @@ public class MyBatisPlusGenerator {
                 .setXml("mapper");//mapper.xml
 
         //5. 整合配置
-        AutoGenerator  ag = new AutoGenerator();
+        AutoGenerator ag = new AutoGenerator();
         ag.setGlobalConfig(config)
                 .setDataSource(dsConfig)
                 .setStrategy(stConfig)

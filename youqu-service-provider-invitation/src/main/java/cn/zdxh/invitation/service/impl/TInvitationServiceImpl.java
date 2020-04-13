@@ -7,23 +7,25 @@ import cn.zdxh.commons.dto.TInvitationFrontDTO;
 import cn.zdxh.commons.entity.TInvitation;
 import cn.zdxh.commons.form.CollectForm;
 import cn.zdxh.commons.form.LaudForm;
+import cn.zdxh.commons.utils.JwtUtils;
 import cn.zdxh.commons.utils.Result;
 import cn.zdxh.commons.utils.WebRuntimeException;
 import cn.zdxh.invitation.client.RedisClient;
 import cn.zdxh.invitation.enums.CollectAndLaudEnum;
+import cn.zdxh.invitation.enums.InvCheckStatusEnum;
 import cn.zdxh.invitation.mapper.TInvitationMapper;
 import cn.zdxh.invitation.service.TInvitationService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * <p>
@@ -34,6 +36,7 @@ import java.util.Set;
  * @since 2019-11-11
  */
 @Service
+@Slf4j
 public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvitation> implements TInvitationService {
 
     @Autowired
@@ -84,7 +87,22 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
 
     @Override
     public Page findAllByInvitation(Page page, TInvitationDTO tInvitationDTO) {
-        page.setRecords(tInvitationMapper.findAllByInvitation(page,tInvitationDTO));
+        List<TInvitationDTO> invitations = tInvitationMapper.findAllByInvitation(page, tInvitationDTO);
+        for (TInvitationDTO invitation : invitations) {
+            //封装审核状态
+            InvCheckStatusEnum statusEnum = InvCheckStatusEnum.getStatusName(invitation.getInvStatus());
+            if (statusEnum != null){
+                invitation.setInvStatusName(statusEnum.getName());
+            }
+            //获取帖子赞总数
+            if (invitation.getId() != null){
+                Integer laud = countLaud(CollectAndLaudEnum.LAUD_INV.getName() + invitation.getId());
+                if (laud != null){
+                    invitation.setInvLaud(String.valueOf(laud));
+                }
+            }
+        }
+        page.setRecords(invitations);
         return page;
     }
 
@@ -139,5 +157,34 @@ public class TInvitationServiceImpl extends ServiceImpl<TInvitationMapper, TInvi
             throw new WebRuntimeException("查询收藏失败");
         }
         return page;
+    }
+
+    /**
+     * 定时任务-自动审核帖子
+     * 每10分钟执行一次
+     */
+    @Scheduled(cron = "0 0/10 * * * ?")
+    public void checkInvitationByTimer(){
+        //查询所有还没审核的帖子
+        Map map = new HashMap();
+        map.put("inv_status",InvCheckStatusEnum.NO_CHECK_INV.getCode());
+        try {
+            log.info("====================================");
+            log.info("开始执行自动审核帖子定时任务...");
+            List<TInvitation> invitations = tInvitationMapper.selectByMap(map);
+            if (!CollectionUtils.isEmpty(invitations)){
+                List<Integer> ids = invitations.stream().map(item ->  item.getId()).collect(Collectors.toList());
+                //批量更新
+                tInvitationMapper.updateBatchByIds(ids);
+            }
+        }catch (Exception e){
+            log.error(e.getMessage());
+            log.info("执行自动审核帖子定时任务出现异常!");
+            log.info("====================================");
+            return;
+        }
+        log.info("执行自动审核帖子定时任务成功！");
+        log.info("====================================");
+
     }
 }

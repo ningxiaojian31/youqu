@@ -12,15 +12,31 @@ spring:
     name: youqu-service-provider-user
   cloud:
     stream:
-      bindings: # 服务的整合处理
-        output: # 这个名字是一个通道的名称，在分析具体源代码的时候会进行说明
-          destination: myOutput # 表示要使用的Exchange名称定义
-          content-type: application/json # 设置消息类型，本次为对象json，如果是文本则设置“text/plain”
-          #binder: defaultRabbit # 设置要绑定的消息服务的具体设置
-  rabbitmq:
-     addresses: 134.175.168.124:5672    #134.175.168.124:5672
-     username: guest
-     password: 25802580
+      bindings: # exchange与queue绑定
+        email_output: # 邮件生产者设置output
+          destination: email.exchange # exchange
+          content-type: application/json # 消息传输类型
+          group: email.queue  # queue
+          binder: youqu_rabbit
+        log_output: # 日志生产者设置output
+          destination: log.exchange
+          content-type: application/json
+          group: log.queue
+          binder: youqu_rabbit #自定义名称
+      binders:
+        youqu_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 134.175.168.124 #134.175.168.124:5672
+                port: 5672
+                username: guest
+                password: 25802580
+#  rabbitmq:
+#     addresses: 134.175.168.124:5672    #134.175.168.124:5672
+#     username: guest
+#     password: 25802580
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://134.175.168.124:3306/youqu?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true

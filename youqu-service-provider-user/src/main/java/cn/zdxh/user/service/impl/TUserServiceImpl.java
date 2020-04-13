@@ -16,6 +16,7 @@ import cn.zdxh.user.mapper.TUserMapper;
 import cn.zdxh.user.service.IMessageProvider;
 import cn.zdxh.user.service.TUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -191,6 +192,12 @@ public class TUserServiceImpl extends ServiceImpl<TUserMapper, TUser> implements
         personDTO.setFansCount(String.valueOf(tFocusFansMapper.selectCount(wrapperFans)));
 
         return personDTO;
+    }
+
+    @Override
+    public Page findAllByUser(Page page, TUser tUser) {
+        page.setRecords(tUserMapper.findAllByUser(page,tUser));
+        return page;
     }
 
     public TUser loginCheck(TUserDTO tUserDTO){

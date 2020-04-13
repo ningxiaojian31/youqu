@@ -1,7 +1,7 @@
 package cn.zdxh.chat.netty;
 
 
-import cn.zdxh.chat.pojo.TbChatRecord;
+import cn.zdxh.commons.entity.TbChatRecord;
 
 public class Message {
     private Integer type; // 消息类型

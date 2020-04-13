@@ -2,9 +2,7 @@ package cn.zdxh.invitation.controller;
 
 
 import cn.zdxh.commons.entity.TTopic;
-import cn.zdxh.commons.utils.PageUtils;
-import cn.zdxh.commons.utils.Result;
-import cn.zdxh.commons.utils.ResultHelper;
+import cn.zdxh.commons.utils.*;
 import cn.zdxh.invitation.service.TTopicService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -34,6 +32,7 @@ public class TTopicController {
     @Autowired
     private TTopicService tTopicService;
 
+    @SystemLog(type = SystemLogEnum.SAVE_LOG)
     @ApiOperation("保存话题")
     @PostMapping("/save")
     public Result save(@RequestBody TTopic tTopic){
@@ -63,6 +62,7 @@ public class TTopicController {
         return ResultHelper.createSuccess(tTopicService.findAllByTopic(page,tTopic));
     }
 
+    @SystemLog(type = SystemLogEnum.DELETE_LOG)
     @ApiOperation("删除话题")
     @DeleteMapping("/del/{id}")
     public Result delete(@PathVariable("id") Integer id){

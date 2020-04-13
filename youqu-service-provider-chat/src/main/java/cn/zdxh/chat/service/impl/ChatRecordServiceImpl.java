@@ -1,10 +1,12 @@
 package cn.zdxh.chat.service.impl;
 
 import cn.zdxh.chat.mapper.TbChatRecordMapper;
-import cn.zdxh.chat.pojo.TbChatRecord;
-import cn.zdxh.chat.pojo.TbChatRecordVO;
 import cn.zdxh.chat.service.ChatRecordService;
 import cn.zdxh.chat.util.IdWorker;
+import cn.zdxh.commons.dto.TbChatRecordBackDTO;
+import cn.zdxh.commons.entity.TbChatRecord;
+import cn.zdxh.commons.pojo.TbChatRecordVO;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -84,5 +86,11 @@ public class ChatRecordServiceImpl implements ChatRecordService {
         tbChatRecord.setHasRead(1);
 
         chatRecordMapper.updateByPrimaryKey(tbChatRecord);
+    }
+
+    @Override
+    public Page findAllByChatRecord(Page page, TbChatRecordBackDTO chatRecord) {
+        page.setRecords(chatRecordMapper.findAllByChatRecord(page,chatRecord));
+        return page;
     }
 }

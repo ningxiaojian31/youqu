@@ -1,7 +1,9 @@
 package cn.zdxh.other.qiniu.controller;
 
 import cn.zdxh.commons.utils.Result;
+import cn.zdxh.commons.utils.ResultHelper;
 import cn.zdxh.commons.utils.WebRuntimeException;
+import cn.zdxh.other.email.service.IMailService;
 import cn.zdxh.other.qiniu.entity.Qiniu;
 import cn.zdxh.other.qiniu.service.QiniuFileService;
 import io.swagger.annotations.Api;
@@ -24,6 +26,9 @@ public class QiniuFileController {
 
     @Autowired
     private QiniuFileService qiniuFileService;
+
+    @Autowired
+    IMailService iMailService;
 
     @Autowired
     private Qiniu qiniu;
@@ -83,6 +88,5 @@ public class QiniuFileController {
         result.success(downloadUrl);
         return result;
     }
-
 
 }

@@ -2,19 +2,16 @@ package cn.zdxh.other.email.mq;
 
 
 import cn.zdxh.commons.dto.TUserDTO;
-import cn.zdxh.other.email.client.RedisClient;
 import cn.zdxh.other.email.service.IMailService;
+import cn.zdxh.other.utils.MqStream;
 import cn.zdxh.other.redis.service.RedisService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.util.Random;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -23,7 +20,6 @@ import java.util.concurrent.locks.ReentrantLock;
  * 监听MQ短信
  */
 @Service
-@EnableBinding(Sink.class)
 @Slf4j
 public class EmailMqListener {
 
@@ -37,7 +33,7 @@ public class EmailMqListener {
     @Value("${time.minute}")
     Integer minute;
 
-    @StreamListener(Sink.INPUT)
+    @StreamListener(MqStream.EMAIL_INPUT)
     public void input(TUserDTO tUserDTO) throws IOException {
         log.info(tUserDTO.toString());
         String code = "";

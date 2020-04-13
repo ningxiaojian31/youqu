@@ -1,5 +1,6 @@
 package cn.zdxh.invitation.service;
 
+import cn.zdxh.commons.dto.TCommentBackDTO;
 import cn.zdxh.commons.entity.TComment;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -19,5 +20,5 @@ public interface TCommentService extends IService<TComment> {
 
     int saveEntity(TComment tComment);
 
-    Page findAllByComment(Page page, TComment tComment);
+    Page findAllByComment(Page page, TCommentBackDTO tComment);
 }

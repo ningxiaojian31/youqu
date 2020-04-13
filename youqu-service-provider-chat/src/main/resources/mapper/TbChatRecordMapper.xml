@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.zdxh.chat.mapper.TbChatRecordMapper" >
-  <resultMap id="BaseResultMap" type="cn.zdxh.chat.pojo.TbChatRecord" >
+  <resultMap id="BaseResultMap" type="cn.zdxh.commons.entity.TbChatRecord" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="userid" property="userid" jdbcType="VARCHAR" />
     <result column="friendid" property="friendid" jdbcType="VARCHAR" />
@@ -11,7 +11,7 @@
     <result column="message" property="message" jdbcType="VARCHAR" />
   </resultMap>
 
-  <resultMap id="ListResultMap" type="cn.zdxh.chat.pojo.TbChatRecordVO" >
+  <resultMap id="ListResultMap" type="cn.zdxh.commons.pojo.TbChatRecordVO" >
     <id column="id" property="id" jdbcType="VARCHAR" />
     <result column="userid" property="userid" jdbcType="VARCHAR" />
     <result column="friendid" property="friendid" jdbcType="VARCHAR" />
@@ -24,12 +24,28 @@
     <result column="image" property="image" jdbcType="VARCHAR" />
   </resultMap>
 
+  <resultMap id="ListBackResultMap" type="cn.zdxh.commons.dto.TbChatRecordBackDTO" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="friendid" property="friendid" jdbcType="VARCHAR" />
+    <result column="has_read" property="hasRead" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="has_delete" property="hasDelete" jdbcType="INTEGER" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="senderName" property="senderName"/>
+    <result column="receiverName" property="receiverName"/>
+  </resultMap>
+
   <sql id="Base_Column_List" >
     id, userid, friendid, has_read, createtime, has_delete, message
   </sql>
 
   <sql id="List_Column_List" >
     temp.id, temp.userid, temp.friendid, temp.has_read, temp.createtime, temp.has_delete, temp.message, u.nickname, u.image
+  </sql>
+
+  <sql id="Back_Column_List" >
+    cr.id, cr.userid, cr.friendid, cr.has_read, cr.createtime, cr.has_delete, cr.message,u1.username AS senderName,u2.username AS receiverName
   </sql>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -39,7 +55,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </select>
 
-  <insert id="insert" parameterType="cn.zdxh.chat.pojo.TbChatRecord" >
+  <insert id="insert" parameterType="cn.zdxh.commons.entity.TbChatRecord" >
     insert into tb_chat_record (id, userid, friendid, 
       has_read, createtime, has_delete, 
       message)
@@ -49,7 +65,7 @@
   </insert>
 
 
-  <update id="updateByPrimaryKey" parameterType="cn.zdxh.chat.pojo.TbChatRecord" >
+  <update id="updateByPrimaryKey" parameterType="cn.zdxh.commons.entity.TbChatRecord" >
     update tb_chat_record
     set userid = #{userid,jdbcType=VARCHAR},
       friendid = #{friendid,jdbcType=VARCHAR},
@@ -60,7 +76,7 @@
     where id = #{id,jdbcType=VARCHAR}
   </update>
 
-    <select id="findListByUserId" parameterType="cn.zdxh.chat.pojo.TbChatRecord" resultMap="ListResultMap">
+    <select id="findListByUserId" parameterType="cn.zdxh.commons.entity.TbChatRecord" resultMap="ListResultMap">
       (SELECT  temp.id, temp.userid, temp.friendid, temp.has_read, temp.createtime, temp.has_delete, temp.message, u.nickname, u.username,u.image
         FROM (SELECT t.friendid,any_value(t.id)AS id,any_value(t.userid) AS userid,any_value(t.has_delete) AS has_delete,
         any_value(t.has_read) AS has_read,any_value(t.createtime) AS createtime,any_value(t.message) AS message
@@ -95,7 +111,7 @@
 
     </select>
 
-  <select id="findUnreadByUserId" parameterType="cn.zdxh.chat.pojo.TbChatRecord" resultMap="BaseResultMap">
+  <select id="findUnreadByUserId" parameterType="cn.zdxh.commons.entity.TbChatRecord" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
     FROM tb_chat_record
@@ -109,11 +125,34 @@
     </where>
   </select>
 
-  <select id="findAllByUserIdAndFriendId" parameterType="cn.zdxh.chat.pojo.TbChatRecord" resultMap="BaseResultMap">
+  <select id="findAllByUserIdAndFriendId" parameterType="cn.zdxh.commons.entity.TbChatRecord" resultMap="BaseResultMap">
     SELECT
     <include refid="Base_Column_List"/>
     FROM tb_chat_record
     WHERE (userid = #{userid} AND friendid = #{friendid}) OR
     (userid = #{friendid} AND friendid = #{userid}) AND has_delete = 0
+  </select>
+
+
+  <select id="findAllByChatRecord" parameterType="cn.zdxh.commons.dto.TbChatRecordBackDTO" resultMap="ListBackResultMap">
+    SELECT
+     <include refid="Back_Column_List"/>
+    FROM tb_chat_record cr
+    LEFT JOIN t_user u1
+    ON cr.userid = u1.id
+    LEFT JOIN t_user u2
+    ON cr.friendid = u2.id
+    <where>
+      <if test="chatRecord.senderName != null and chatRecord.senderName != ''" >
+        AND u1.username LIKE "%"#{chatRecord.senderName}"%"
+      </if>
+      <if test="chatRecord.receiverName != null and chatRecord.receiverName != ''" >
+        AND u2.username LIKE "%"#{chatRecord.receiverName}"%"
+      </if>
+      <if test="chatRecord.message != null and chatRecord.message != ''" >
+        AND cr.message LIKE "%"#{chatRecord.message}"%"
+      </if>
+    </where>
+    ORDER BY cr.createtime DESC
   </select>
 </mapper>

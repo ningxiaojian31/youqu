@@ -8,6 +8,24 @@ spring:
     url: jdbc:mysql://134.175.168.124:3306/youqu?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf8&useSSL=true
     username: root
     password: Aa123456.*
+  cloud:
+    stream:
+      bindings: # exchange与queue绑定
+        log_output: # 日志生产者设置output
+          destination: log.exchange
+          content-type: application/json
+          group: log.queue
+          binder: youqu_rabbit
+      binders:
+        youqu_rabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: 134.175.168.124 #134.175.168.124:5672
+                port: 5672
+                username: guest
+                password: 25802580
 
 eureka:
   client:

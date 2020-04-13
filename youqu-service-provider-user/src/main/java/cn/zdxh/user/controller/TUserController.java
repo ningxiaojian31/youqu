@@ -4,23 +4,22 @@ package cn.zdxh.user.controller;
 import cn.zdxh.commons.dto.TUserDTO;
 import cn.zdxh.commons.entity.TUser;
 import cn.zdxh.commons.form.TUserForm;
-import cn.zdxh.commons.utils.JwtUtils;
 import cn.zdxh.commons.utils.Result;
 import cn.zdxh.commons.utils.ResultHelper;
 import cn.zdxh.commons.utils.WebRuntimeException;
-import cn.zdxh.user.client.RedisClient;
 import cn.zdxh.user.service.IMessageProvider;
 import cn.zdxh.user.service.TUserService;
+import cn.zdxh.commons.utils.SystemLog;
+import cn.zdxh.commons.utils.SystemLogEnum;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * <p>
@@ -64,6 +63,7 @@ public class TUserController {
      * @param bindingResult
      * @return
      */
+    @SystemLog(type = SystemLogEnum.REGISTER_LOG)
     @ApiOperation("用户注册")
     @PostMapping("/register")
     public Result register(@RequestBody @Validated TUserForm tUserForm,BindingResult bindingResult){
@@ -73,6 +73,7 @@ public class TUserController {
         return ResultHelper.createSuccess(tUserService.register(tUserForm));
     }
 
+    @SystemLog(type = SystemLogEnum.LOGIN_LOG)
     @ApiOperation("用户登录")
     @PostMapping("/login")
     public Result login(@RequestBody @Validated TUserDTO tUserDTO, BindingResult bindingResult){
@@ -89,6 +90,28 @@ public class TUserController {
         return ResultHelper.createSuccess(tUserService.findAll());
     }
 
+    @ApiOperation("查询所有用户")
+    @PostMapping("/list")
+    public Result list(@RequestBody TUser tUser,
+                       @RequestParam(value = "currentPage",required = false) Integer currentPage,
+                       @RequestParam(value = "pageSize",required = false) Integer pageSize){
+        Page page = new Page();
+        page.setCurrent(currentPage != null ? currentPage : 1);
+        page.setSize(pageSize != null ? pageSize : 10);
+        return ResultHelper.createSuccess(tUserService.findAllByUser(page,tUser));
+    }
+
+    @SystemLog(type = SystemLogEnum.DELETE_LOG)
+    @ApiOperation("删除用户")
+    @DeleteMapping("/del/{id}")
+    public Result delete(@PathVariable("id") Integer id){
+        boolean res = tUserService.removeById(id);
+        if (res){
+            return ResultHelper.createSuccess("删除用户成功");
+        }
+        return ResultHelper.createError("删除用户失败");
+    }
+
     @ApiOperation("管理员登录")
     @PostMapping("/admin/login")
     public Result adminLogin(@RequestBody TUserDTO tUserDTO){
@@ -100,6 +123,7 @@ public class TUserController {
     public Result frontGet(@PathVariable Integer userId){
         return ResultHelper.createSuccess(tUserService.findByIdOnFront(userId));
     }
+
 
     @ApiOperation("查询用户个人信息/前台")
     @GetMapping("/front/info/get/{userId}")
@@ -113,6 +137,7 @@ public class TUserController {
         return ResultHelper.createSuccess(tUserService.getPersonById(userId));
     }
 
+    @SystemLog(type = SystemLogEnum.SAVE_LOG)
     @ApiOperation("修改用户个人信息/前台")
     @PostMapping("/front/info")
     public Result updateUserInfoFront(@RequestBody TUser tUser){
@@ -124,34 +149,6 @@ public class TUserController {
             return ResultHelper.createError("保存失败");
         }
     }
-
-    @ApiOperation("测试")
-    @GetMapping("/timeout")
-    public Result timeout(){
-        try {
-            Thread.sleep(4000);
-        } catch (InterruptedException e) {
-           throw new WebRuntimeException("超时异常");
-        }
-        return ResultHelper.createSuccess("超时成功");
-    }
-
-//    @GetMapping("/test")
-//    public Result testStream(){
-//        Result result = new Result();
-//        try {
-//            TUser user = new TUser();
-//            user.setUsername("13189461916");
-//            user.setPassword("123456");
-//            user.setNickname("Justin");
-//            provider.send(user);
-//            result.success(true);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//            result.error(e.getMessage());
-//        }
-//        return result;
-//    }
 
 
 }

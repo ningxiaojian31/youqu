@@ -1,5 +1,6 @@
 package cn.zdxh.user;
 
+import cn.zdxh.user.utils.MqStream;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,7 +13,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication(scanBasePackages = {"cn.zdxh.user","cn.zdxh.commons"})
 @EnableEurekaClient
 @MapperScan("cn.zdxh.user.mapper")
-@EnableBinding(Source.class)
+@EnableBinding(MqStream.class)
 @EnableAsync //开启异步
 @EnableFeignClients //开启Feign远程调用
 public class YouquServiceProviderUserApplication {

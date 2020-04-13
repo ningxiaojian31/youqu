@@ -28,4 +28,23 @@
         SELECT * FROM t_user
     </select>
 
+    <select id="findAllByUser" parameterType="cn.zdxh.commons.entity.TUser" resultMap="BaseResultMap">
+        SELECT
+         <include refid="Base_Column_List"/>
+        FROM t_user
+        <where>
+             type = 2
+            <if test="tUser.username != null and tUser.username != ''">
+                AND username LIKE "%"#{tUser.username}"%"
+            </if>
+            <if test="tUser.nickname != null and tUser.nickname != ''">
+                AND nickname LIKE "%"#{tUser.nickname}"%"
+            </if>
+            <if test="tUser.signature != null and tUser.signature != ''">
+                AND signature LIKE "%"#{tUser.signature}"%"
+            </if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
 </mapper>

@@ -63,6 +63,10 @@ public class TInvitation extends Model<TInvitation> {
      */
     private String invCollect;
     /**
+     * 审核状态
+     */
+    private Integer invStatus;
+    /**
      * 创建时间
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")

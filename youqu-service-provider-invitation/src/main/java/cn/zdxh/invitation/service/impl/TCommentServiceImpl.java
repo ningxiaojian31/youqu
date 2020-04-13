@@ -1,14 +1,18 @@
 package cn.zdxh.invitation.service.impl;
 
+import cn.zdxh.commons.dto.TCommentBackDTO;
 import cn.zdxh.commons.entity.TComment;
+import cn.zdxh.invitation.enums.CollectAndLaudEnum;
 import cn.zdxh.invitation.mapper.TCommentMapper;
 import cn.zdxh.invitation.service.TCommentService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -38,8 +42,10 @@ public class TCommentServiceImpl extends ServiceImpl<TCommentMapper, TComment> i
     }
 
     @Override
-    public Page findAllByComment(Page page, TComment tComment) {
-        page.setRecords(tCommentMapper.findAllByComment(page,tComment));
+    public Page findAllByComment(Page page, TCommentBackDTO tComment) {
+        List<TCommentBackDTO> comments = tCommentMapper.findAllByCommentDTO(page, tComment);
+        //这里还没查询点赞数、赶时间不写了
+        page.setRecords(comments);
         return page;
     }
 }

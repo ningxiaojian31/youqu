@@ -1,11 +1,12 @@
 package cn.zdxh.invitation.controller;
 
 
+import cn.zdxh.commons.dto.TCommentBackDTO;
 import cn.zdxh.commons.entity.TComment;
-import cn.zdxh.commons.utils.PageUtils;
 import cn.zdxh.commons.utils.Result;
 import cn.zdxh.commons.utils.ResultHelper;
-import cn.zdxh.commons.utils.WebRuntimeException;
+import cn.zdxh.commons.utils.SystemLog;
+import cn.zdxh.commons.utils.SystemLogEnum;
 import cn.zdxh.invitation.service.TCommentService;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.Api;
@@ -13,10 +14,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * <p>
@@ -35,6 +32,7 @@ public class TCommentController {
     @Autowired
     private TCommentService tCommentService;
 
+    @SystemLog(type = SystemLogEnum.SAVE_LOG)
     @ApiOperation("保存评论")
     @PostMapping("/save")
     public Result save(@RequestBody TComment tComment){
@@ -54,16 +52,17 @@ public class TCommentController {
 
     @ApiOperation("查询所有评论")
     @PostMapping("/list")
-    public Result list(@RequestBody TComment tComment,
+    public Result list(@RequestBody TCommentBackDTO tComment,
                          @RequestParam(value = "currentPage",required = false) Integer currentPage,
                          @RequestParam(value = "pageSize",required = false) Integer pageSize){
         //分页查询
-        com.baomidou.mybatisplus.extension.plugins.pagination.Page page = new Page();
+        Page page = new Page();
         page.setCurrent(currentPage != null ? currentPage : 1);
         page.setSize(pageSize != null ? pageSize : 10);
         return ResultHelper.createSuccess(tCommentService.findAllByComment(page,tComment));
     }
 
+    @SystemLog(type = SystemLogEnum.DELETE_LOG)
     @ApiOperation("删除评论")
     @DeleteMapping("/del/{id}")
     public Result delete(@PathVariable("id") Integer id){
