@@ -49,7 +49,7 @@
   - 备注：
     统一网关入口：http://localhost:9999 （直接通过网关路由到其他模块需要token,即需要登录。测试接口的时候建议直接访问到具体模块）
     
-* 本地：需要安装mysql/rabbitmq/redis，并修改相关连接参数
+* 本地：需要安装mysql/rabbitmq/redis、开通七牛云、开启邮箱SMTP，并修改相关连接参数
   数据库文件：sql/youqu.sql
 </code></pre>
 
@@ -69,3 +69,6 @@
 <img src="https://github.com/ningxiaojian31/youqu/blob/master/sql/img/%E5%90%8E%E5%8F%B0/%E7%99%BB%E5%BD%95-%E5%90%8E%E5%8F%B0.png" width="600" heigh="400"/>
 <img src="https://github.com/ningxiaojian31/youqu/blob/master/sql/img/%E5%90%8E%E5%8F%B0/%E5%B8%96%E5%AD%90-%E5%90%8E%E5%8F%B0.png" width="600" heigh="400"/>
 <img src="https://github.com/ningxiaojian31/youqu/blob/master/sql/img/%E5%90%8E%E5%8F%B0/%E6%97%A5%E5%BF%97-%E5%90%8E%E5%8F%B0.png" width="600" heigh="400"/>
+
+
+* #### 联系作者：微信：ningxiaojian31
